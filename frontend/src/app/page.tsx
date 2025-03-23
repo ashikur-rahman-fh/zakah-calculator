@@ -2,6 +2,6 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div>Hello Front the Zakah Calculator App (deployment test)</div>
+    <div>Welcome to zakah calculator by Ashikur</div>
   );
 }
