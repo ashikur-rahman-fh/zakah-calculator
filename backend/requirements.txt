@@ -1,0 +1,11 @@
+asgiref==3.8.1
+Django==5.1.6
+django-filter==25.1
+djangorestframework==3.15.2
+gunicorn==23.0.0
+Markdown==3.7
+psycopg==3.2.5
+psycopg2-binary==2.9.10
+python-dotenv==1.0.0
+gunicorn==23.0.0
+whitenoise==6.9.0
