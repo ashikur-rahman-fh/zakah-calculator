@@ -1,5 +1,3 @@
-version: '3.3'
-
 services:
   db:
     image: postgres:16.0
@@ -16,9 +14,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: gunicorn --bind 0.0.0.0:80 zakahcal.wsgi:application
+    command: gunicorn --bind 0.0.0.0:8000 zakahcal.wsgi:application
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - db
     environment:
@@ -31,14 +29,13 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
-    command: npm start
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    command: npm start -- --port 80
     ports:
-      - "3000:3000"
+      - "80:80"
     depends_on:
       - backend
-    environment:
-      NEXT_PUBLIC_API_URL: http://backend:8000
-
 
 volumes:
   postgres_data:

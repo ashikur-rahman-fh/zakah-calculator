@@ -1,12 +1,8 @@
-version: '3.3'
-
 services:
   db:
     image: postgres:16.0
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
@@ -21,12 +17,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      DEBUG: ${DEBUG}
-      SECRET_KEY: ${SECRET_KEY}
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
-
+    env_file:
+      - .env
   frontend:
     build: ./frontend
     command: npm run dev
@@ -38,7 +30,7 @@ services:
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_API_URL: http://backend:8000
+      NEXT_PUBLIC_API_URL: http://localhost:8000
 
 volumes:
   postgres_data:

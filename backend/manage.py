@@ -3,6 +3,10 @@
 import os
 import sys
 
+ENVIRONMENT = os.getenv("DJANGO_ENV", "development")
+if ENVIRONMENT == "development":
+    from dotenv import load_dotenv
+    load_dotenv()
 
 def main():
     """Run administrative tasks."""

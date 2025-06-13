@@ -25,8 +25,10 @@ COPY . /app/
 # Copy the entrypoint script
 COPY entrypoint.sh /app/entrypoint.sh
 
-# Expose the port the app runs on
-EXPOSE 8000
+USER 0
+RUN mkdir -p /app/static
+RUN mkdir -p /app/staticfiles
+USER $CONTAINER_USER_ID
 
-# Set the entrypoint
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Expose the port the app runs on
+EXPOSE 80
