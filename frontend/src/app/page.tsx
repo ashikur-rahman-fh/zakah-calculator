@@ -17,7 +17,8 @@ export default function Home() {
                         shadow-2xl
                         p-4
                         col-span-1
-                        text-white">
+                        text-white
+                        overflow-y-scroll">
           <ZakahYear />
         </div>
         <div className="backdrop-blur-lg
@@ -29,7 +30,9 @@ export default function Home() {
                         p-4
                         col-span-1
                         md:col-span-2
-                        text-white">
+                        text-white
+                        overflow-x-scroll
+                        overflow-y-scroll">
           <Transactions />
         </div>
       </div>
