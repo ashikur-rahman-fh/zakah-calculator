@@ -1,29 +1,29 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-
-import { api } from "@/lib/api";
+import React from "react";
+import Transactions from "./Transactions";
+import ZakahYear from "./Zakah";
 
 export default function Home() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("/");
-        console.log(response);
-        setData(response);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <React.Fragment>
-      <p>Data from backend: {data ? JSON.stringify(data) : "Loading..."}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+        <div className="backdrop-blur-lg
+                        bg-white/25
+                        border
+                        border-white/10
+                        rounded-xl
+                        shadow-2xl
+                        p-4
+                        col-span-1
+                        text-white">
+          <ZakahYear />
+        </div>
+        <div>
+          <Transactions />
+        </div>
+      </div>
     </React.Fragment>
   );
 }
