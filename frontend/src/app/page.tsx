@@ -20,7 +20,16 @@ export default function Home() {
                         text-white">
           <ZakahYear />
         </div>
-        <div>
+        <div className="backdrop-blur-lg
+                        bg-white/25
+                        border
+                        border-white/10
+                        rounded-xl
+                        shadow-2xl
+                        p-4
+                        col-span-1
+                        md:col-span-2
+                        text-white">
           <Transactions />
         </div>
       </div>

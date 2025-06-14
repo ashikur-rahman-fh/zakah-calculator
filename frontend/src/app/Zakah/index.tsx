@@ -11,16 +11,16 @@ const MarkComponent = ({ due }: { due: number }) => {
 
 const YearComponent: React.FC<IZakahYear> = ({ year, month, zakah, paid }) => {
   const due = Math.max(0, zakah - paid);
-  const dueColor = due > 0 ? 'text-red-600' : 'text-white';
+  const dueColor = due > 0 ? 'text-red-500' : 'text-white';
 
   return (
     <React.Fragment>
       <li className="m-2 md:m-4">
         <pre>
           <p className="text-center text-lg">{year} {month} <MarkComponent due={due} /></p>
-          <p>Total <span className="text-blue-600">{zakah}</span></p>
-          <p>Paid  <span className="text-green-600">{paid}</span></p>
-          <p>Due   <span className={`${dueColor}`}>{due}</span></p>
+          <p>Total <span className="text-blue-500 bg-white/20 px-2 rounded-md">{zakah}</span></p>
+          <p>Paid  <span className="text-green-500 bg-white/20 px-2 rounded-md">{paid}</span></p>
+          <p>Due   <span className={`${dueColor} bg-white/20 px-2 rounded-md`}>{due}</span></p>
         </pre>
       </li>
     </React.Fragment>
