@@ -7,7 +7,7 @@ const SelectYear = () => {
   return (
     <select
       name="year"
-      className="mb-4 bg-white/20 border border-white/10 text-white text-md rounded-md focus:ring-white focus:border-white block p-1"
+      className="w-1/3 mb-4 bg-white/20 border border-white/10 text-white text-md rounded-md focus:ring-white focus:border-white block p-1 focus:outline-none"
     >
       <option>2023</option>
       <option>2024</option>
@@ -33,7 +33,7 @@ const TransactionsRenderer = ({ transactions }: { transactions: ITransaction[] }
 
   return (
     <div className="flex-row-reverse">
-      <div>
+      <div className="flex justify-end">
         <SelectYear />
       </div>
       <div>
