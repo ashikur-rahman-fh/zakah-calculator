@@ -1,11 +1,7 @@
 import React from "react";
 
 import { ITransaction, mockTransactions } from "../types";
-
-const Amount = ({ amount } : { amount : number }) => {
-  return <span className="bg-white/20 rounded-md">{amount.toString().padStart(6, ' ')}$</span>;
-};
-
+import { Amount } from "../Common";
 
 const SelectYear = () => {
   return (
@@ -24,7 +20,7 @@ const Transaction: React.FC<ITransaction> = ({ to, amount, date, method }) => {
   return (
     <li>
       <pre>
-        <p className="text-lg">{date} <Amount amount={amount} />    sent to <span className="text-green-500">{to}</span> using <span className="text-blue-500">{method}</span></p>
+        <p className="text-lg">{date} <Amount amount={amount} fontColor="text-white" />    sent to <span className="text-green-500">{to}</span> using <span className="text-blue-500">{method}</span></p>
       </pre>
     </li>
   );

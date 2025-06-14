@@ -1,6 +1,7 @@
 import React from "react";
 
 import { IZakahYear, mockData } from "../types";
+import { Amount } from "../Common";
 
 const MarkComponent = ({ due }: { due: number }) => {
   return (
@@ -18,9 +19,9 @@ const YearComponent: React.FC<IZakahYear> = ({ year, month, zakah, paid }) => {
       <li className="m-2 md:m-4">
         <pre>
           <p className="text-center text-lg">{year} {month} <MarkComponent due={due} /></p>
-          <p>Total <span className="text-blue-500 bg-white/20 px-2 rounded-md">{zakah}</span></p>
-          <p>Paid  <span className="text-green-500 bg-white/20 px-2 rounded-md">{paid}</span></p>
-          <p>Due   <span className={`${dueColor} bg-white/20 px-2 rounded-md`}>{due}</span></p>
+          <p>Total <Amount amount={zakah} fontColor="text-blue-500" /> </p>
+          <p>Paid  <Amount amount={paid} fontColor="text-green-500" /></p>
+          <p>Due   <Amount amount={due} fontColor={dueColor} /></p>
         </pre>
       </li>
     </React.Fragment>
