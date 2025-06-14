@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ITransaction, mockTransactions } from "../types";
-import { Amount } from "../Common";
+import { Amount, GlassCardHeader } from "../Common";
 
 const SelectYear = () => {
   return (
@@ -63,7 +63,7 @@ const Transactions = () => {
   return (
     <React.Fragment>
       <section>
-        <h1 className="text-xl text-center text-white uppercase mb-4">Transactions</h1>
+        <GlassCardHeader>Transaction</GlassCardHeader>
         <TransactionsRenderer transactions={mockTransactions} />
       </section>
     </React.Fragment>

@@ -1,41 +1,26 @@
 "use client";
-
 import React from "react";
+
 import Transactions from "./Transactions";
 import ZakahYear from "./Zakah";
+import PayZakah from "./PayZakah";
+
+import { GlassCard } from "./Common";
 
 export default function Home() {
-
   return (
     <React.Fragment>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-        <div className="backdrop-blur-lg
-                        bg-white/25
-                        border
-                        border-white/10
-                        rounded-xl
-                        shadow-2xl
-                        p-4
-                        col-span-1
-                        text-white
-                        overflow-y-scroll">
+        <GlassCard twStyle="col-span-1">
           <ZakahYear />
-        </div>
-        <div className="backdrop-blur-lg
-                        bg-white/25
-                        border
-                        border-white/10
-                        rounded-xl
-                        shadow-2xl
-                        p-4
-                        col-span-1
-                        md:col-span-2
-                        text-white
-                        overflow-x-scroll
-                        overflow-y-scroll">
+        </GlassCard>
+        <GlassCard twStyle="col-span-1 md:col-span-2">
           <Transactions />
-        </div>
+        </GlassCard>
+        <GlassCard twStyle="col-span-1 md:col-span-3">
+          <PayZakah />
+        </GlassCard>
       </div>
-    </React.Fragment>
+    </React.Fragment >
   );
-}
+};

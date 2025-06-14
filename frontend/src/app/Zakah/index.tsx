@@ -1,7 +1,7 @@
 import React from "react";
 
 import { IZakahYear, mockData } from "../types";
-import { Amount } from "../Common";
+import { Amount, GlassCardHeader } from "../Common";
 
 const MarkComponent = ({ due }: { due: number }) => {
   return (
@@ -58,7 +58,7 @@ const ZakahYear = () => {
   return (
     <React.Fragment>
       <section>
-        <h1 className="text-xl uppercase text-center font-semibold mb-4">History</h1>
+        <GlassCardHeader>History</GlassCardHeader>
         <ZakahYearRenderer zakahYears={mockData} />
       </section>
     </React.Fragment>
