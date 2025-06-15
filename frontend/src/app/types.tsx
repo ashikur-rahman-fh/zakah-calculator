@@ -89,3 +89,11 @@ export const mockTransactions: ITransaction[] = [
     description: "Zakah donation for orphans' education"
   }
 ];
+
+export interface IInputField {
+  id: string;
+  name: string;
+  placeholder: string;
+  error: string;
+  validator: (value: string) => boolean;
+};

@@ -10,14 +10,14 @@ import { GlassCard } from "./Common";
 export default function Home() {
   return (
     <React.Fragment>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-        <GlassCard twStyle="col-span-1">
+      <div className="grid grid-cols-1 md:grid-cols-9 gap-16">
+        <GlassCard twStyle="col-span-1 md:col-start-1 md:col-end-4">
           <ZakahYear />
         </GlassCard>
-        <GlassCard twStyle="col-span-1 md:col-span-2">
+        <GlassCard twStyle="col-span-1 md:col-start-4 md:col-end-10">
           <Transactions />
         </GlassCard>
-        <GlassCard twStyle="col-span-1 md:col-span-3">
+        <GlassCard twStyle="col-span-1 md:col-start-3 md:col-end-8">
           <PayZakah />
         </GlassCard>
       </div>
