@@ -20,7 +20,7 @@ const Transaction: React.FC<ITransaction> = ({ to, amount, date, method }) => {
   return (
     <li>
       <pre>
-        <p className="text-lg">{date} <Amount amount={amount} fontColor="text-white" />    sent to <span className="text-green-500">{to}</span> using <span className="text-blue-500">{method}</span></p>
+        <p className="text-lg">{date} <Amount amount={amount} fontColor="text-white" />    sent to <span className="text-green-700">{to}</span> using <span className="text-blue-700">{method}</span></p>
       </pre>
     </li>
   );

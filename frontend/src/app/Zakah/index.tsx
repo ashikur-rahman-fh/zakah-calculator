@@ -5,22 +5,22 @@ import { Amount, GlassCardHeader } from "../Common";
 
 const MarkComponent = ({ due }: { due: number }) => {
   return (
-    due > 0 ? <span className="text-red-500">&#10008;</span> :
-      <span className="text-green-500">&#10004;</span>
+    due > 0 ? <span className="text-red-700">&#10008;</span> :
+      <span className="text-green-700">&#10004;</span>
   );
 };
 
 const YearComponent: React.FC<IZakahYear> = ({ year, month, zakah, paid }) => {
   const due = Math.max(0, zakah - paid);
-  const dueColor = due > 0 ? 'text-red-500' : 'text-white';
+  const dueColor = due > 0 ? 'text-red-700' : 'text-white';
 
   return (
     <React.Fragment>
       <li className="m-2 md:m-4">
         <pre>
           <p className="text-center text-lg">{year} {month} <MarkComponent due={due} /></p>
-          <p>Total <Amount amount={zakah} fontColor="text-blue-500" /> </p>
-          <p>Paid  <Amount amount={paid} fontColor="text-green-500" /></p>
+          <p>Total <Amount amount={zakah} fontColor="text-blue-700" /> </p>
+          <p>Paid  <Amount amount={paid} fontColor="text-green-700" /></p>
           <p>Due   <Amount amount={due} fontColor={dueColor} /></p>
         </pre>
       </li>
