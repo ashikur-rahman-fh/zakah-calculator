@@ -7,8 +7,9 @@ import { IInputField } from "../types";
 import { InputFields } from "./constants";
 import { useForm } from "@/hooks/InputHandler";
 
-const PayZakahForm = ({ inputFields }: { inputFields: IInputField[] }) => {
-  const { value, error, hasError, handleChange } = useForm(inputFields);
+const PayZakahForm = ({ inputFields, paymentFor }:
+  { inputFields: IInputField[], paymentFor: string }) => {
+  const { value, error, hasError, handleChange, clearForm } = useForm(inputFields);
   return (
     <React.Fragment>
       {inputFields.map((inputField: IInputField, index: number) => {
@@ -23,22 +24,40 @@ const PayZakahForm = ({ inputFields }: { inputFields: IInputField[] }) => {
           />
         );
       })}
-      <Button
-        disabled={Object.entries(error).length === 0 || hasError}
-        onClick={() => console.log("hello world")}
-      >
-        Submit
-      </Button>
+      <div>
+        <Button
+          disabled={Object.entries(error).length === 0 || hasError}
+          onClick={() => console.log({...value, paymentFor})}
+        >
+          Submit
+        </Button>
+        <Button
+          disabled={false}
+          onClick={clearForm}
+        >
+          Clear
+        </Button>
+      </div>
     </ React.Fragment>
   );
 };
 
-const PayZakah = () => {
+const PayZakah = ({ paymentFor, closeForm }:
+  { paymentFor: string, closeForm: () => void }) => {
   return (
     <section>
-      <GlassCardHeader>Pay Zakah</GlassCardHeader>
+      <GlassCardHeader>
+        <span>Pay Zakah - {paymentFor}</span>
+        <span
+          className="float-right mx-4 text-red-700 cursor-pointer"
+          onClick={closeForm}
+        >&#10008; </span>
+      </GlassCardHeader>
       <div className="flex flex-col justify-center items-center">
-        <PayZakahForm inputFields={InputFields} />
+        <PayZakahForm
+          inputFields={InputFields}
+          paymentFor={paymentFor}
+        />
       </div>
     </section>
   );

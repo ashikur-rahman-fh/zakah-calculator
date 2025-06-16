@@ -7,6 +7,7 @@ interface UseFormResult {
   error: Record<string, string>;
   hasError: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  clearForm: () => void;
 }
 
 export const useForm = (inputFields: IInputField[]): UseFormResult => {
@@ -35,5 +36,10 @@ export const useForm = (inputFields: IInputField[]): UseFormResult => {
     }, false);
   }, [error, inputFields]);
 
-  return { value, error, hasError, handleChange };
+  const clearForm = () => {
+    setValue({});
+    setError({});
+  };
+
+  return { value, error, hasError, handleChange, clearForm };
 };

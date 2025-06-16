@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 
-import { ITransaction, mockTransactions } from "../types";
+import { ITransaction, IZakahYear, mockData, mockTransactions } from "../types";
 import { Amount, GlassCardHeader } from "../Common";
 
-const SelectYear = () => {
+const thisYear = new Date().getFullYear().toString();
+
+const SelectYear = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
+  const [year, setYear] = useState<string>(thisYear);
+
+  const optionWithCurrentYear = useMemo(() => {
+    const years = zakahYears.map((zakah) => zakah.year.trim());
+    const yearsWithCurrent = [...years, thisYear];
+
+    return [... new Set(yearsWithCurrent)];
+  }, [zakahYears]);
+
+
   return (
     <select
       name="year"
       className="w-1/3 mb-4 bg-white/20 border border-white/10 text-white text-md rounded-md focus:ring-white focus:border-white block p-1 focus:outline-none"
+      defaultValue={year}
+      onChange={(e) => setYear(e.target.value)}
     >
-      <option>2023</option>
-      <option>2024</option>
-      <option>2025</option>
+      {optionWithCurrentYear.map((year: string) => {
+        return (
+          <option key={year} value={year}>{year}</option>
+        );
+      })}
     </select>
   );
 };
@@ -34,7 +50,7 @@ const TransactionsRenderer = ({ transactions }: { transactions: ITransaction[] }
   return (
     <div className="flex-row-reverse">
       <div className="flex justify-end">
-        <SelectYear />
+        <SelectYear zakahYears={mockData} />
       </div>
       <div>
         <ul>
