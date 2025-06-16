@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 
 export const Amount = ({ amount, fontColor }: { amount: number, fontColor: string }) => {
-  return <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>{amount.toString().padStart(6, ' ')}$</span>;
+  return <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>{amount.toString().padStart(8, ' ')}$</span>;
 };
 
 export const GlassCard = ({ twStyle, children }: { twStyle: string, children: React.ReactNode }) => {
@@ -76,19 +76,19 @@ export const StyledInput = forwardRef<HTMLInputElement, StyledInputProps>(
 
 StyledInput.displayName = "StyledInput";
 
-export const Button = ({ children, disabled, onClick } :
-    { children : React.ReactNode, disabled: boolean, onClick: () => void }) => {
+export const Button = ({ children, disabled, twStyle, onClick }:
+  { children: React.ReactNode, disabled: boolean, twStyle: string, onClick: () => void }) => {
 
   const bgStyle = disabled
-                  ? "bg-gray-400 border-gray-600/30"
-                  : "bg-white/30";
+    ? "bg-gray-400 border-gray-600/30"
+    : "bg-white/30";
 
   const cursorStyle = disabled
-                      ? "cursor-not-allowed"
-                      : "cursor-pointer";
+    ? "cursor-not-allowed"
+    : "cursor-pointer";
   const hoverStyle = disabled
-                      ? ""
-                      : "hover:bg-blue-700/30 hover:border-blue-300";
+    ? ""
+    : "hover:bg-blue-700/30 hover:border-blue-300";
   return (
     <button
       className={`
@@ -101,6 +101,7 @@ export const Button = ({ children, disabled, onClick } :
         ${bgStyle}
         ${cursorStyle}
         ${hoverStyle}
+        ${twStyle}
       `}
       disabled={disabled}
       onClick={onClick}

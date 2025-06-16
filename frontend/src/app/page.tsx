@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 
 import Transactions from "./Transactions";
 import ZakahYear from "./Zakah";
@@ -23,6 +24,13 @@ export default function Home() {
   const hidden = openPaymentForm ? "visible" : "hidden";
   return (
     <React.Fragment>
+      <GlassCard twStyle="mb-2">
+        <Link
+          href="/calculate"
+        >
+          Click here to calculate your zakah
+        </Link>
+      </GlassCard>
       <div className="grid grid-cols-1 md:grid-cols-9 gap-16">
         <GlassCard twStyle="col-span-1 md:col-start-1 md:col-end-4">
           <ZakahYear

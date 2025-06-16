@@ -26,12 +26,14 @@ const PayZakahForm = ({ inputFields, paymentFor }:
       })}
       <div>
         <Button
+          twStyle=""
           disabled={Object.entries(error).length === 0 || hasError}
-          onClick={() => console.log({...value, paymentFor})}
+          onClick={() => console.log({ ...value, paymentFor })}
         >
           Submit
         </Button>
         <Button
+          twStyle=""
           disabled={false}
           onClick={clearForm}
         >

@@ -10,9 +10,13 @@ interface UseFormResult {
   clearForm: () => void;
 }
 
-export const useForm = (inputFields: IInputField[]): UseFormResult => {
-  const [value, setValue] = useState<Record<string, string>>({});
-  const [error, setError] = useState<Record<string, string>>({});
+export const useForm = (inputFields: IInputField[], InitialState: Record<string, string> = {}): UseFormResult => {
+  const errorState = Object.keys(InitialState).reduce((newObj, key) => {
+    return { ...newObj, [key]: "" };
+  }, {});
+
+  const [value, setValue] = useState<Record<string, string>>({ ...InitialState });
+  const [error, setError] = useState<Record<string, string>>({ ...errorState });
 
   const validateField = (name: string, val: string, index: number): string => {
     const isValid = inputFields[index].validator(val);
