@@ -60,3 +60,4 @@ backend/db*
 
 # staticfile
 backend/staticfiles
+backend/static
