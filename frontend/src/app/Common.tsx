@@ -110,3 +110,9 @@ export const Button = ({ children, disabled, twStyle, onClick }:
     </button>
   );
 };
+
+export const Loading = () => {
+  return (
+    <h1 className="text-4xl text-center">Loading...</h1>
+  );
+};

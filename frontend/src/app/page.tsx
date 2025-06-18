@@ -1,58 +1,16 @@
-"use client";
-import React, { useState } from "react";
-import Link from "next/link";
+import React from "react";
 
-import Transactions from "./Transactions";
-import ZakahYear from "./Zakah";
-import PayZakah from "./PayZakah";
+import Homepage from "./HomePage";
 
-import { GlassCard } from "./Common";
+export const metadata = {
+  title: 'Home - Zakah Calculator',
+  description: 'Manage your zakah calculations and transactions',
+};
 
-export default function Home() {
-  const [openPaymentForm, setOpenPaymentForm] = useState<boolean>(false);
-  const [paymentFor, setPaymentFor] = useState<string>("");
-
-  const showPaymentForm = () => {
-    setOpenPaymentForm(true);
-  };
-
-  const hidePaymentForm = () => {
-    setOpenPaymentForm(false);
-    setPaymentFor("");
-  };
-
-  const hidden = openPaymentForm ? "visible" : "hidden";
+const Home = () => {
   return (
-    <React.Fragment>
-      <GlassCard twStyle="mb-2">
-        <Link
-          href="/calculate"
-        >
-          Click here to calculate your zakah
-        </Link>
-      </GlassCard>
-      <div className="grid grid-cols-1 md:grid-cols-9 gap-16">
-        <GlassCard twStyle="col-span-1 md:col-start-1 md:col-end-4">
-          <ZakahYear
-            showPaymentForm={showPaymentForm}
-            setPaymentFor={setPaymentFor}
-          />
-        </GlassCard>
-        <GlassCard twStyle="col-span-1 md:col-start-4 md:col-end-10">
-          <Transactions />
-        </GlassCard>
-        <div className={`
-                    col-span-1 md:col-start-3 md:col-end-8
-                    ${hidden}
-        `}>
-          <GlassCard twStyle="">
-            <PayZakah
-              paymentFor={paymentFor}
-              closeForm={hidePaymentForm}
-            />
-          </GlassCard>
-        </div>
-      </div>
-    </React.Fragment >
+    <Homepage />
   );
 };
+
+export default Home;

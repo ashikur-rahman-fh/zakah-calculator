@@ -98,6 +98,7 @@ export interface IInputField {
   id: string;
   name: string;
   placeholder: string;
+  type?: string;
   error: string;
   validator: (value: string) => boolean;
 };
