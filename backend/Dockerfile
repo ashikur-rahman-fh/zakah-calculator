@@ -31,4 +31,4 @@ RUN mkdir -p /app/staticfiles
 USER $CONTAINER_USER_ID
 
 # Expose the port the app runs on
-EXPOSE 80
+EXPOSE 8000
