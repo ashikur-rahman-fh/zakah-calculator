@@ -1,15 +1,33 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-import { ITransaction, IZakahYear, mockData, mockTransactions } from "../types";
+import { ITransaction, IZakahYear } from "../types";
 import { Amount, GlassCardHeader } from "../Common";
+import { api } from "@/utils/api";
 
 const thisYear = new Date().getFullYear().toString();
 
-const SelectYear = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
+const SelectYear = ({ zakahYears, setTransactions }:
+  { zakahYears: IZakahYear[], setTransactions: (transactions: ITransaction[]) => void }) => {
   const [year, setYear] = useState<string>(thisYear);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await api.get("/api/zakah-transactions", { year: year });
+        setTransactions(data as ITransaction[]);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.log(error);
+        }
+      }
+    })();
+  }, [setTransactions, year]);
+
+
   const optionWithCurrentYear = useMemo(() => {
-    const years = zakahYears.map((zakah) => zakah.year.trim());
+    const years = zakahYears.map((zakah) => String(zakah.year).trim());
     const yearsWithCurrent = [...years, thisYear];
 
     return [... new Set(yearsWithCurrent)];
@@ -42,19 +60,22 @@ const Transaction: React.FC<ITransaction> = ({ to, amount, date, method }) => {
   );
 };
 
-const TransactionsRenderer = ({ transactions }: { transactions: ITransaction[] }) => {
-  if (transactions === undefined || transactions === null || transactions.length === 0) {
-    return <div>No transaction available</div>;
-  }
+const NoTransaction = () => {
+  return <h1 className="text-center text-lg">No transactions available</h1>;
+};
+
+const TransactionsRenderer = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
   return (
     <div className="flex-row-reverse">
       <div className="flex justify-end">
-        <SelectYear zakahYears={mockData} />
+        <SelectYear zakahYears={zakahYears} setTransactions={setTransactions} />
       </div>
       <div>
         <ul>
-          {
+          {transactions.length === 0 ? <NoTransaction /> :
+
             transactions.map((transaction: ITransaction) => {
               return (
                 <Transaction
@@ -75,12 +96,12 @@ const TransactionsRenderer = ({ transactions }: { transactions: ITransaction[] }
 };
 
 
-const Transactions = () => {
+const Transactions = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
   return (
     <React.Fragment>
       <section>
         <GlassCardHeader>Transaction</GlassCardHeader>
-        <TransactionsRenderer transactions={mockTransactions} />
+        <TransactionsRenderer zakahYears={zakahYears} />
       </section>
     </React.Fragment>
   );

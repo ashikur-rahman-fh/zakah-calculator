@@ -22,6 +22,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from .views import WelcomeView, UserView
+from core.urls import urlpatterns as core_urls
 
 urlpatterns = [
     path('', WelcomeView.as_view(), name="welcome"),
@@ -29,4 +30,4 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/user/', UserView.as_view(), name='user'),
-]
+] + core_urls

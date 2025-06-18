@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 
-import { IZakahYear, mockData } from "../types";
+import { IZakahYear } from "../types";
 import { Amount, GlassCardHeader } from "../Common";
+
 
 const MarkComponent = ({ due }: { due: number }) => {
   return (
@@ -45,7 +48,7 @@ const ZakahYearRenderer = ({ zakahYears, showPaymentForm, setPaymentFor }:
   { zakahYears: IZakahYear[], showPaymentForm: () => void, setPaymentFor: (value: string) => void }) => {
   if (zakahYears === undefined || zakahYears === null || zakahYears.length === 0) {
     return (
-      <div>No data to display</div>
+      <h1 className="text-center text-lg">No data to display</h1>
     );
   }
 
@@ -71,14 +74,15 @@ const ZakahYearRenderer = ({ zakahYears, showPaymentForm, setPaymentFor }:
   );
 };
 
-const ZakahYear = ({ showPaymentForm, setPaymentFor }:
-  { showPaymentForm: () => void, setPaymentFor: (value: string) => void }) => {
+const ZakahYear = ({ zakahYears, showPaymentForm, setPaymentFor }:
+  { zakahYears: IZakahYear[], showPaymentForm: () => void, setPaymentFor: (value: string) => void }) => {
+
   return (
     <React.Fragment>
       <section>
         <GlassCardHeader>History</GlassCardHeader>
         <ZakahYearRenderer
-          zakahYears={mockData.slice(-3)}
+          zakahYears={zakahYears.slice(-3)}
           showPaymentForm={showPaymentForm}
           setPaymentFor={setPaymentFor}
         />

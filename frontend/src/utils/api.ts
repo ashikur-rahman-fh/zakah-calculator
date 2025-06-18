@@ -1,8 +1,11 @@
 import apiClient from "./apiClient";
 
 export const api = {
-  get: <T = unknown>(url: string, config: Record<string, unknown> = {}) =>
-    requestWrapper<T>(() => apiClient.get(url, config)),
+  get: <T = unknown>(
+    url: string,
+    params: Record<string, unknown> = {},
+    config: Record<string, unknown> = {}
+  ) => requestWrapper<T>(() => apiClient.get(url, { ...config, params })),
   post: <T = unknown>(url: string, data = {}, config = {}) =>
     requestWrapper<T>(() => apiClient.post(url, data, config)),
   put: <T = unknown>(url: string, data = {}, config = {}) =>

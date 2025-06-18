@@ -14,39 +14,12 @@ export type IMonth =
 
 export interface IZakahYear {
   id: string;
-  year: string;
+  year: number;
   month: IMonth;
   arabicYear?: string,
   zakah: number;
   paid: number;
 };
-
-export const mockData: IZakahYear[] = [
-  {
-    id: "a1",
-    year: "2023",
-    month: "Jan",
-    arabicYear: "1444-1445",
-    zakah: 444,
-    paid: 444
-  },
-  {
-    id: "a2",
-    year: "2024",
-    month: "Feb",
-    arabicYear: "1445-1446",
-    zakah: 555,
-    paid: 444,
-  },
-  {
-    id: "a3",
-    year: "2024",
-    month: "Mar",
-    arabicYear: "1446-1447",
-    zakah: 666,
-    paid: 666
-  }
-];
 
 export interface ITransaction {
   to: string;
