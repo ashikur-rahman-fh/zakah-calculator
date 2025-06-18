@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/utils/api';
-import { Loading } from '@/app/Common';
+import { LoadingSkeleton } from '@/app/Common';
 
 interface AuthContextProps {
   user: string | null;
@@ -105,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout, user, router }}>
-      {loading ? <Loading /> : children}
+      {loading ? <LoadingSkeleton /> : children}
     </AuthContext.Provider>
   );
 }

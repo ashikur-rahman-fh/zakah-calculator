@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import NavbarNoAuth from "./NavbarNoAuth";
 
 export const Amount = ({ amount, fontColor }: { amount: number, fontColor: string }) => {
   return <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>{amount.toString().padStart(8, ' ')}$</span>;
@@ -111,8 +112,41 @@ export const Button = ({ children, disabled, twStyle, onClick }:
   );
 };
 
-export const Loading = () => {
+export const LoadingSkeleton = () => {
   return (
-    <h1 className="text-4xl text-center">Loading...</h1>
+    <React.Fragment>
+      <NavbarNoAuth />
+      <div className="mx-auto w-full rounded-md p-16 mt-32">
+        <div className="flex animate-pulse space-x-4">
+          <div className="size-20 rounded-full bg-white/30"></div>
+          <div className="flex-1 space-y-6 py-1">
+            <div className="h-8 rounded-4xl bg-white/30"></div>
+            <div className="space-y-3">
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-2 h-2 rounded bg-white/30"></div>
+                <div className="col-span-1 h-2 rounded bg-white/30"></div>
+              </div>
+              <div className="h-2 rounded bg-white/30"></div>
+              <div className="h-2 rounded bg-white/30"></div>
+              <div className="h-2 rounded bg-white/30"></div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-2 h-4 rounded-4xl bg-white/30"></div>
+                <div className="col-span-1 h-4 rounded-4xl bg-white/30"></div>
+              </div>
+              <div className="h-2 rounded bg-white/30"></div>
+              <div className="h-2 rounded bg-white/30"></div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-2 h-2 rounded bg-white/30"></div>
+                <div className="col-span-1 h-2 rounded bg-white/30"></div>
+                <div className="h-4 rounded-4xl bg-white/30"></div>
+                <div className="h-4 rounded-4xl bg-white/30"></div>
+                <div className="h-4 rounded-4xl bg-white/30"></div>
+              </div>
+              <div className="h-2 rounded bg-white/30"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ React.Fragment>
   );
 };
