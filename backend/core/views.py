@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from .services import ZakahService, TransactionService
-from .serializers import ZakahYearSerializer, TransactionSerializer
+from .serializers import ZakahYearSerializer, TransactionSerializer, ZakahCalculationCreateSerializer
 
 from .utils import month_to_index
 
@@ -41,3 +41,18 @@ class ZakahTransactionByYearAPIView(APIView):
         transactions = TransactionService.get_transactions_by_year(year)
         serializer = TransactionSerializer(transactions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ZakahCalculationCreateAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = ZakahCalculationCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            zakah = serializer.save()
+            return Response({
+                "id": zakah.id,
+                "year": zakah.year,
+                "month": zakah.month,
+                "zakah": zakah.total_amount
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

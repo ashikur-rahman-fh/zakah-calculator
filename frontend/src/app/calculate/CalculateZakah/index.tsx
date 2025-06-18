@@ -7,6 +7,7 @@ import { StyledInput, Button } from "@/app/Common";
 import { useForm } from "@/hooks/InputHandler";
 
 import { calZakahInputs } from "./constants";
+import { api } from "@/utils/api";
 
 let cnt = 1;
 
@@ -23,8 +24,8 @@ const getNewField = (): IInputField => {
   }
 }
 
-const CalculateZakahForm = ({ inputFields, setTotalAsset }:
-  { inputFields: IInputField[], setTotalAsset: (asset: number) => void }) => {
+const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
+  { inputFields: IInputField[], totalAsset: number, setTotalAsset: (asset: number) => void }) => {
   const [fields, setFields] = useState(inputFields);
   const { value, error, hasError, handleChange, clearForm } = useForm(fields, { ...InitialState });
 
@@ -45,6 +46,24 @@ const CalculateZakahForm = ({ inputFields, setTotalAsset }:
     }, 0);
     setTotalAsset(total);
   }, [value, setTotalAsset]);
+
+  const handleSubmit = async () => {
+    const zakah = Math.ceil(totalAsset * 2.5) / 100;
+    try {
+      await api.post("/api/zakah-years/create/", {
+        year: value["year"],
+        month: value["month"],
+        total_amount: zakah,
+        calculation_breakdown: value
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error(error);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -73,7 +92,7 @@ const CalculateZakahForm = ({ inputFields, setTotalAsset }:
         <Button
           twStyle=""
           disabled={Object.entries(error).length === 0 || hasError}
-          onClick={() => console.log({ ...value })}
+          onClick={handleSubmit}
         >
           Submit
         </Button>
@@ -89,12 +108,13 @@ const CalculateZakahForm = ({ inputFields, setTotalAsset }:
   );
 };
 
-const CalculateZakah = ({ setTotalAsset }:
-  { setTotalAsset: (asset: number) => void }) => {
+const CalculateZakah = ({ totalAsset, setTotalAsset }:
+  { totalAsset: number, setTotalAsset: (asset: number) => void }) => {
   return (
     <section>
       <CalculateZakahForm
         inputFields={calZakahInputs}
+        totalAsset={totalAsset}
         setTotalAsset={setTotalAsset}
       />
     </section>

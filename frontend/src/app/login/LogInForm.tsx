@@ -9,7 +9,6 @@ import { useForm } from '@/hooks/InputHandler';
 
 const LoginForm = () => {
   const { value, hasError, handleChange } = useForm([...InputFields]);
-  console.log(value, hasError);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const { login } = useAuth();
 

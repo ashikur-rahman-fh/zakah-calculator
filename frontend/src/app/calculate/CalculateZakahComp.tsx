@@ -13,6 +13,7 @@ const CalculateZakahComponent = () => {
       <GlassCard twStyle="col-span-1 md:col-start-1 md:col-end-9">
         <GlassCardHeader>Enter Assets</GlassCardHeader>
         <CalculateZakah
+          totalAsset={totalAsset}
           setTotalAsset={setTotalAsset}
         />
       </GlassCard>
