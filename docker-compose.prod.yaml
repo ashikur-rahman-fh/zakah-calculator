@@ -13,7 +13,7 @@ services:
       timeout: 5s
       retries: 5
 
-  backend:
+  backend_prod:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
@@ -25,7 +25,7 @@ services:
       db:
         condition: service_healthy
 
-  frontend:
+  frontend_prod:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
@@ -35,7 +35,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend
+      - backend_prod
 
 volumes:
   postgres_data:

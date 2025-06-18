@@ -22,13 +22,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the Django project into the container
 COPY . /app/
 
-# Copy the entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-
-USER 0
-RUN mkdir -p /app/static
-RUN mkdir -p /app/staticfiles
-USER $CONTAINER_USER_ID
-
 # Expose the port the app runs on
 EXPOSE 8000
