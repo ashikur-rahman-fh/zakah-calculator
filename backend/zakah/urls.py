@@ -15,8 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+
+@require_GET
+def welcome(request):
+    return JsonResponse({
+        "application": "Zakah Calculator API",
+        "version": "1.0.0",
+        "status": "operational",
+        "description": (
+            "Accurately calculate, track, and manage their zakah obligations in accordance with Islamic principles."
+        ),
+        "metadata": {
+            "timezone": str(request.timezone) if hasattr(request, "timezone") else "UTC",
+            "client_ip": request.META.get("REMOTE_ADDR", "unknown"),
+            "request_id": request.META.get("HTTP_X_REQUEST_ID", "not_provided")
+        }
+    }, status=200)
+
 
 urlpatterns = [
+    path('', welcome),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls'))
 ]
