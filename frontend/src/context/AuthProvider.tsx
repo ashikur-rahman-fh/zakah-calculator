@@ -1,9 +1,11 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useCallback, useReducer } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/utils/api';
 import { LoadingSkeleton } from '@/app/Common';
+
+import { zakahReducer, initialState, IZakahState, IAction } from './StateProvider';
 
 interface AuthContextProps {
   user: string | null;
@@ -12,6 +14,8 @@ interface AuthContextProps {
   logout: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   router: any;
+  zakahState: IZakahState;
+  dispatch: React.Dispatch<IAction>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -20,6 +24,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [zakahState, dispatch] = useReducer(zakahReducer, initialState);
+
   const router = useRouter();
 
   const handleUnauthenticatedUser = useCallback(() => {
@@ -104,7 +110,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, user, router }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, login, logout, user, router, zakahState, dispatch }}
+    >
       {loading ? <LoadingSkeleton /> : children}
     </AuthContext.Provider>
   );

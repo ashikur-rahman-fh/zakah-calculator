@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const bg_url = `bg-[url('/bg_5.png')]`;
+  const bg_url = `bg-[url('/bg_5.jpg')]`;
   const pathname = usePathname();
 
   return (
