@@ -2,28 +2,20 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { ITransaction, IZakahYear } from "../types";
 import { Amount, GlassCardHeader } from "../Common";
-import { api } from "@/utils/api";
+import { updateTransactions } from "@/utils/zakahApis";
+import { useAuth } from "@/context/AuthProvider";
 
 const thisYear = new Date().getFullYear().toString();
 
-const SelectYear = ({ zakahYears, setTransactions }:
-  { zakahYears: IZakahYear[], setTransactions: (transactions: ITransaction[]) => void }) => {
+const SelectYear = ({ zakahYears }:
+  { zakahYears: IZakahYear[] }) => {
   const [year, setYear] = useState<string>(thisYear);
 
+  const { dispatch } = useAuth();
+
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await api.get("/api/zakah-transactions", { year: year });
-        setTransactions(data as ITransaction[]);
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        } else {
-          console.log(error);
-        }
-      }
-    })();
-  }, [setTransactions, year]);
+    updateTransactions(Number(year.trim()), dispatch);
+  }, [year, dispatch]);
 
 
   const optionWithCurrentYear = useMemo(() => {
@@ -65,21 +57,22 @@ const NoTransaction = () => {
 };
 
 const TransactionsRenderer = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const { zakahState } = useAuth();
+  const transactions = zakahState.transactions;
 
   return (
     <div className="flex-row-reverse">
       <div className="flex justify-end">
-        <SelectYear zakahYears={zakahYears} setTransactions={setTransactions} />
+        <SelectYear zakahYears={zakahYears} />
       </div>
       <div>
         <ul>
           {transactions.length === 0 ? <NoTransaction /> :
 
-            transactions.map((transaction: ITransaction) => {
+            transactions.map((transaction: ITransaction, index: number) => {
               return (
                 <Transaction
-                  key={transaction.description}
+                  key={index.toString()}
                   to={transaction.to}
                   amount={transaction.amount}
                   date={transaction.date}

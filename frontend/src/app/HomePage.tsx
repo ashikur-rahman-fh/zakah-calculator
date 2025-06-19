@@ -9,29 +9,18 @@ import ZakahYear from "./Zakah";
 import PayZakah from "./PayZakah";
 
 import { GlassCard } from "./Common";
-import { IZakahYear } from "./types";
 
-import { api } from "@/utils/api";
+import { useAuth } from "@/context/AuthProvider";
+import { updateZakahYears } from "@/utils/zakahApis";
 
 export default function HomePage() {
   const [openPaymentForm, setOpenPaymentForm] = useState<boolean>(false);
   const [zakahToPay, setZakahToPay] = useState<{ year: number, month: string } | null>(null);
-  const [zakahYears, setZakahYears] = useState<IZakahYear[]>([]);
+  const { zakahState, dispatch } = useAuth();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await api.get("/api/zakah-years");
-        setZakahYears(data as IZakahYear[]);
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        } else {
-          console.error(error);
-        }
-      }
-    })();
-  }, []);
+    updateZakahYears(dispatch);
+  }, [dispatch]);
 
   const showPaymentForm = () => {
     setOpenPaymentForm(true);
@@ -55,13 +44,13 @@ export default function HomePage() {
       <div className="grid grid-cols-1 md:grid-cols-9 gap-16">
         <GlassCard twStyle="col-span-1 md:col-start-1 md:col-end-4">
           <ZakahYear
-            zakahYears={zakahYears}
+            zakahYears={zakahState.zakahYears}
             showPaymentForm={showPaymentForm}
             setZakahToPay={setZakahToPay}
           />
         </GlassCard>
         <GlassCard twStyle="col-span-1 md:col-start-4 md:col-end-10">
-          <Transactions zakahYears={zakahYears} />
+          <Transactions zakahYears={zakahState.zakahYears} />
         </GlassCard>
         {openPaymentForm ?
           <div className={`

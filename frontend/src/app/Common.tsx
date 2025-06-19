@@ -155,8 +155,9 @@ export const LoadingSkeleton = () => {
 
 
 export const notify = {
-  error: (message: string) => {
+  error: (message: string, id: string) => {
     toast.error(message, {
+      toastId: id,
       position: "bottom-left",
       autoClose: 1500,
       hideProgressBar: true,
@@ -168,8 +169,9 @@ export const notify = {
       transition: Zoom,
     })
   },
-  success: (message: string) => {
+  success: (message: string, id: string) => {
     toast.success(message, {
+      toastId: id,
       position: "bottom-left",
       autoClose: 1500,
       hideProgressBar: true,
@@ -181,8 +183,9 @@ export const notify = {
       transition: Zoom,
     })
   },
-  info: (message: string) => {
+  info: (message: string, id: string) => {
     toast.info(message, {
+      toastId: id,
       position: "bottom-left",
       autoClose: 1500,
       hideProgressBar: true,
@@ -194,5 +197,4 @@ export const notify = {
       transition: Zoom,
     })
   },
-
-}
+};
