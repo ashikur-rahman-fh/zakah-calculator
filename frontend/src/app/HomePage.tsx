@@ -13,7 +13,7 @@ import { api } from "@/utils/api";
 
 export default function HomePage() {
   const [openPaymentForm, setOpenPaymentForm] = useState<boolean>(false);
-  const [paymentFor, setPaymentFor] = useState<string>("");
+  const [zakahToPay, setZakahToPay] = useState<{ year: number, month: string } | null>(null);
   const [zakahYears, setZakahYears] = useState<IZakahYear[]>([]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function HomePage() {
 
   const hidePaymentForm = () => {
     setOpenPaymentForm(false);
-    setPaymentFor("");
+    setZakahToPay(null);
   };
 
   const hidden = openPaymentForm ? "visible" : "hidden";
@@ -55,23 +55,24 @@ export default function HomePage() {
           <ZakahYear
             zakahYears={zakahYears}
             showPaymentForm={showPaymentForm}
-            setPaymentFor={setPaymentFor}
+            setZakahToPay={setZakahToPay}
           />
         </GlassCard>
         <GlassCard twStyle="col-span-1 md:col-start-4 md:col-end-10">
           <Transactions zakahYears={zakahYears} />
         </GlassCard>
-        <div className={`
+        {openPaymentForm ?
+          <div className={`
                     col-span-1 md:col-start-3 md:col-end-8
                     ${hidden}
         `}>
-          <GlassCard twStyle="">
-            <PayZakah
-              paymentFor={paymentFor}
-              closeForm={hidePaymentForm}
-            />
-          </GlassCard>
-        </div>
+            <GlassCard twStyle="">
+              <PayZakah
+                zakahToPay={zakahToPay}
+                closeForm={hidePaymentForm}
+              />
+            </GlassCard>
+          </div> : null}
       </div>
     </React.Fragment >
   );

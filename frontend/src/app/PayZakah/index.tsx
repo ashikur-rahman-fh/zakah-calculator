@@ -6,10 +6,33 @@ import { Button, GlassCardHeader, StyledInput } from "../Common";
 import { IInputField } from "../types";
 import { InputFields } from "./constants";
 import { useForm } from "@/hooks/InputHandler";
+import { api } from "@/utils/api";
 
-const PayZakahForm = ({ inputFields, paymentFor }:
-  { inputFields: IInputField[], paymentFor: string }) => {
+const PayZakahForm = ({ inputFields, zakahToPay }:
+  { inputFields: IInputField[], zakahToPay: { year: number, month: string } | null }) => {
   const { value, error, hasError, handleChange, clearForm } = useForm(inputFields);
+
+  const handleSubmit = () => {
+    if (zakahToPay === null) {
+      return;
+    }
+    (async () => {
+      try {
+        await api.post("/api/zakah-transactions/create/", {
+          ...value,
+          zakah_year: zakahToPay.year,
+          zakah_month: zakahToPay.month
+        })
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.log(error)
+        }
+      }
+    })();
+  };
+
   return (
     <React.Fragment>
       {inputFields.map((inputField: IInputField, index: number) => {
@@ -28,7 +51,7 @@ const PayZakahForm = ({ inputFields, paymentFor }:
         <Button
           twStyle=""
           disabled={Object.entries(error).length === 0 || hasError}
-          onClick={() => console.log({ ...value, paymentFor })}
+          onClick={handleSubmit}
         >
           Submit
         </Button>
@@ -44,12 +67,12 @@ const PayZakahForm = ({ inputFields, paymentFor }:
   );
 };
 
-const PayZakah = ({ paymentFor, closeForm }:
-  { paymentFor: string, closeForm: () => void }) => {
+const PayZakah = ({ zakahToPay, closeForm }:
+  { zakahToPay: { year: number, month: string } | null, closeForm: () => void }) => {
   return (
     <section>
       <GlassCardHeader>
-        <span>Pay Zakah - {paymentFor}</span>
+        <span>Pay Zakah - {zakahToPay?.year + " " + zakahToPay?.month}</span>
         <span
           className="float-right mx-4 text-red-700 cursor-pointer"
           onClick={closeForm}
@@ -58,7 +81,7 @@ const PayZakah = ({ paymentFor, closeForm }:
       <div className="flex flex-col justify-center items-center">
         <PayZakahForm
           inputFields={InputFields}
-          paymentFor={paymentFor}
+          zakahToPay={zakahToPay}
         />
       </div>
     </section>

@@ -58,3 +58,45 @@ class ZakahCalculationCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return ZakahCalculation.objects.create(**validated_data)
+
+class ZakahTransactionCreateSerializer(serializers.Serializer):
+    zakah_year = serializers.IntegerField()
+    zakah_month = serializers.CharField()
+
+    date = serializers.DateField()
+    donated_to = serializers.CharField()
+    amount = serializers.DecimalField(max_digits=12, decimal_places=2)
+    payment_method = serializers.CharField()
+    description = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+
+    def validate(self, attrs):
+        try:
+            month_int = month_to_index(attrs['zakah_month'])
+        except ValueError as e:
+            raise serializers.ValidationError({"zakah_month": str(e)})
+
+        try:
+            zakah_instance = ZakahCalculation.objects.get(
+                year=attrs['zakah_year'],
+                month=month_int
+            )
+        except ZakahCalculation.DoesNotExist:
+            raise serializers.ValidationError("No ZakahCalculation found for given year/month.")
+
+        attrs['zakah'] = zakah_instance
+        attrs['payment_date'] = attrs.pop('date')
+        attrs['paid_to'] = attrs.pop('donated_to')
+        attrs['payment_method'] = attrs.pop('payment_method')
+        attrs['month'] = month_int
+
+        return attrs
+
+    def create(self, validated_data):
+        validated_data.pop('zakah_year')
+        validated_data.pop('zakah_month')
+        validated_data.pop('month')
+
+        transaction = ZakahTransaction(**validated_data)
+        transaction.full_clean()
+        transaction.save()
+        return transaction

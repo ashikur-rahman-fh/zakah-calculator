@@ -15,16 +15,17 @@ const MarkComponent = ({ due }: { due: number }) => {
 
 interface YearProps extends IZakahYear {
   showPaymentForm: () => void;
-  setPaymentFor: (value: string) => void;
+  setZakahToPay: (value: { year: number, month: string }) => void;
 };
 
-const YearComponent: React.FC<YearProps> = ({ year, month, zakah, paid, showPaymentForm, setPaymentFor }) => {
+
+const YearComponent: React.FC<YearProps> = ({ year, month, zakah, paid, showPaymentForm, setZakahToPay }) => {
   const due = Math.max(0, zakah - paid);
   const dueColor = due > 0 ? 'text-red-700' : 'text-white';
 
-  const handleClick = (value: string) => {
+  const handleClick = (value: { year: number, month: string }) => {
     showPaymentForm();
-    setPaymentFor(value);
+    setZakahToPay(value);
   };
 
   return (
@@ -32,7 +33,7 @@ const YearComponent: React.FC<YearProps> = ({ year, month, zakah, paid, showPaym
       <li className="m-2 md:m-4">
         <pre
           className="cursor-pointer"
-          onClick={() => handleClick(`${year} ${month}`)}
+          onClick={() => handleClick({ year, month })}
         >
           <p className="text-center text-lg">{year} {month} <MarkComponent due={due} /></p>
           <p>Total <Amount amount={zakah} fontColor="text-blue-700" /> </p>
@@ -44,8 +45,11 @@ const YearComponent: React.FC<YearProps> = ({ year, month, zakah, paid, showPaym
   );
 };
 
-const ZakahYearRenderer = ({ zakahYears, showPaymentForm, setPaymentFor }:
-  { zakahYears: IZakahYear[], showPaymentForm: () => void, setPaymentFor: (value: string) => void }) => {
+const ZakahYearRenderer = ({ zakahYears, showPaymentForm, setZakahToPay }:
+  {
+    zakahYears: IZakahYear[], showPaymentForm: () => void,
+    setZakahToPay: (value: { year: number, month: string }) => void
+  }) => {
   if (zakahYears === undefined || zakahYears === null || zakahYears.length === 0) {
     return (
       <h1 className="text-center text-lg">No data to display</h1>
@@ -65,7 +69,7 @@ const ZakahYearRenderer = ({ zakahYears, showPaymentForm, setPaymentFor }:
               zakah={zakahYear.zakah}
               paid={zakahYear.paid}
               showPaymentForm={showPaymentForm}
-              setPaymentFor={setPaymentFor}
+              setZakahToPay={setZakahToPay}
             />
           )
         })
@@ -74,8 +78,11 @@ const ZakahYearRenderer = ({ zakahYears, showPaymentForm, setPaymentFor }:
   );
 };
 
-const ZakahYear = ({ zakahYears, showPaymentForm, setPaymentFor }:
-  { zakahYears: IZakahYear[], showPaymentForm: () => void, setPaymentFor: (value: string) => void }) => {
+const ZakahYear = ({ zakahYears, showPaymentForm, setZakahToPay }:
+  {
+    zakahYears: IZakahYear[], showPaymentForm: () => void,
+    setZakahToPay: (value: { year: number, month: string }) => void
+  }) => {
 
   return (
     <React.Fragment>
@@ -84,7 +91,7 @@ const ZakahYear = ({ zakahYears, showPaymentForm, setPaymentFor }:
         <ZakahYearRenderer
           zakahYears={zakahYears.slice(-3)}
           showPaymentForm={showPaymentForm}
-          setPaymentFor={setPaymentFor}
+          setZakahToPay={setZakahToPay}
         />
       </section>
     </React.Fragment>
