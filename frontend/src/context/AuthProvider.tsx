@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback, useReducer } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/utils/api';
-import { LoadingSkeleton } from '@/app/Common';
+import { LoadingSkeleton, notify } from '@/app/Common';
 
 import { zakahReducer, initialState, IZakahState, IAction } from './StateProvider';
 
@@ -107,6 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAuthenticated(false);
     setUser(null);
     router.push('/login');
+    notify.success("You have been logged out!", "logged-out");
   };
 
   return (

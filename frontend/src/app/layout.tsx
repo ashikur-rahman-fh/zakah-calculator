@@ -2,6 +2,7 @@
 import "./globals.css";
 import Navbar from "./Navbar";
 import { usePathname } from 'next/navigation';
+import { ToastContainer, Zoom } from "react-toastify";
 
 import { AuthProvider } from "@/context/AuthProvider";
 
@@ -30,6 +31,19 @@ export default function RootLayout({
             Ashikur Rahman &copy; {new Date().getFullYear()}
           </footer>
         </AuthProvider>
+        <ToastContainer
+          position="bottom-left"
+          autoClose={1500}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Zoom}
+        />
       </body>
     </html>
   );

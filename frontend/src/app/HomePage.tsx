@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ToastContainer, Zoom } from 'react-toastify';
-
 
 import Transactions from "./Transactions";
 import ZakahYear from "./Zakah";
@@ -65,19 +63,6 @@ export default function HomePage() {
             </GlassCard>
           </div> : null}
       </div>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1500}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Zoom}
-      />
     </React.Fragment >
   );
 };

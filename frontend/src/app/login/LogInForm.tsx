@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthProvider';
-import { Button, StyledInput } from '../Common';
+import { Button, notify, StyledInput } from '../Common';
 import { InputFields } from './constants';
 import { useForm } from '@/hooks/InputHandler';
 
@@ -15,8 +15,9 @@ const LoginForm = () => {
   const handleSubmit = async () => {
     try {
       await login(value["username"], value["password"]);
+      notify.success(`Welcome ${value["username"]}!`, "login-success");
     } catch (error: unknown) {
-      console.error('Login failed:', error);
+      notify.error("Login was unsuccessful!", "login-failed");
       if (error instanceof Error) {
         setErrorMsg(error.message);
       } else {
