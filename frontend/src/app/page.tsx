@@ -1,6 +1,6 @@
 import React from "react";
+import PrivateHomePage from "./PrivateHomePage";
 
-import Homepage from "./HomePage";
 
 export const metadata = {
   title: 'Home - Zakah Calculator',
@@ -8,9 +8,7 @@ export const metadata = {
 };
 
 const Home = () => {
-  return (
-    <Homepage />
-  );
+  return <PrivateHomePage />
 };
 
 export default Home;
