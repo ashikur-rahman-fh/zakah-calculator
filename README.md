@@ -27,14 +27,15 @@ A full-stack Zakah Calculator application with a Next.js frontend and Django bac
 
 ## Development Setup
 
-### Using Docker (Recommended)
 
-#### 1. Prerequisites
-
+#### Prerequisites
+- [Node.JS](https://nodejs.org/en)
+- [Python](https://www.python.org/)
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/)
 
-#### 2. Environment Variables
+### Using Docker (Recommended)
+#### 1. Environment Variables
 
 - Copy `.env` and `prod.env` as needed and fill in required values.
 - For development, `.env` is used by default.
@@ -44,12 +45,12 @@ A full-stack Zakah Calculator application with a Next.js frontend and Django bac
 From the project root, run:
 
 ```bash
-docker-compose up --build
+docker-compose up --build # will build and start container
+docker-compose up # will save some time and only start the container
 ```
 
 - **Frontend**: [http://localhost:3000](http://localhost:3000)
 - **Backend (Development)**: [http://localhost:8000](http://localhost:8000) (Server by Django dev server in development)
-- **Backend (Production)**: [http://localhost:8001](http://localhost:8001) (Server by Gunicorn in production)
 
 #### 4. Stopping Services
 
@@ -59,8 +60,8 @@ docker-compose down
 
 #### 5. Running Backend Management Commands
 
-For example, to run migrations:
+To access the container or debugging
 
 ```bash
-docker-compose exec backend python manage.py migrate
+docker-compose exec -it <container_id> sh
 ```
