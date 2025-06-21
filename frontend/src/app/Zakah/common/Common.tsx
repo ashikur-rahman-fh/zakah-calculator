@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import NavbarNoAuth from "./NavbarNoAuth";
+import NavbarNoAuth from "../../NavbarNoAuth";
 
 import { toast, Zoom } from "react-toastify";
 

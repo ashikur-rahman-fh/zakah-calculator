@@ -2,12 +2,12 @@
 
 import React from "react";
 
-import { Button, GlassCardHeader, StyledInput } from "../Common";
+import { Button, GlassCardHeader, StyledInput } from "../Zakah/common/Common";
 import { IInputField } from "../types";
 import { InputFields } from "./constants";
 import { useForm } from "@/hooks/InputHandler";
 import { api } from "@/utils/api";
-import { notify } from "../Common";
+import { notify } from "../Zakah/common/Common";
 import { useAuth } from "@/context/AuthProvider";
 import { updateZakahYears } from "@/utils/zakahApis";
 

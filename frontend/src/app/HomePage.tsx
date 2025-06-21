@@ -6,7 +6,7 @@ import Transactions from "./Transactions";
 import ZakahYear from "./Zakah";
 import PayZakah from "./PayZakah";
 
-import { GlassCard } from "./Common";
+import { GlassCard } from "./Zakah/common/Common";
 
 import { useAuth } from "@/context/AuthProvider";
 import { updateZakahYears } from "@/utils/zakahApis";

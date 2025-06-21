@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
 
-import { Amount, GlassCard, GlassCardHeader } from "../Common";
+import { Amount, GlassCard, GlassCardHeader } from "../Zakah/common/Common";
 import CalculateZakah from "./CalculateZakah";
 
 const CalculateZakahComponent = () => {

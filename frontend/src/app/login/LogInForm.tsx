@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthProvider';
-import { Button, notify, StyledInput } from '../Common';
+import { Button, notify, StyledInput } from '../Zakah/common/Common';
 import { InputFields } from './constants';
 import { useForm } from '@/hooks/InputHandler';
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { ITransaction, IZakahYear } from "../types";
-import { Amount, GlassCardHeader } from "../Common";
+import { Amount, GlassCardHeader } from "../Zakah/common/Common";
 import { updateTransactions } from "@/utils/zakahApis";
 import { useAuth } from "@/context/AuthProvider";
 

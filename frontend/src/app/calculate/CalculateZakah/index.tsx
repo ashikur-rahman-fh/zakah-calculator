@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { InitialState } from "./constants";
 import { IInputField } from "@/app/types";
-import { StyledInput, Button } from "@/app/Common";
+import { StyledInput, Button } from "@/app/Zakah/common/Common";
 import { useForm } from "@/hooks/InputHandler";
 
 import { calZakahInputs } from "./constants";

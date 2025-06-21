@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GlassCard, GlassCardHeader } from "./Common";
+import { GlassCard, GlassCardHeader } from "./Zakah/common/Common";
 import Link from "next/link";
 
 const Message = () => {
