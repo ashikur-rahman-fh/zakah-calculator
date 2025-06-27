@@ -86,7 +86,7 @@ sqlite_db = {
 postgres_db = {
     "ENGINE": "django.db.backends.postgresql",
     "NAME": os.getenv("POSTGRES_DB") or "mydatabase",
-    "USER": os.getenv("POSTGRES_USER") or "myuser_db_change",
+    "USER": os.getenv("POSTGRES_USER") or "postgres",
     "PASSWORD": os.getenv("POSTGRES_PASSWORD") or "mypassword",
     "HOST": os.getenv("POSTGRES_HOST") or "db",
     "PORT": os.getenv("POSTGRES_PORT") or "5432",
