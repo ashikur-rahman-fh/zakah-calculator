@@ -8,6 +8,9 @@ import { useForm } from "@/hooks/InputHandler";
 
 import { calZakahInputs } from "./constants";
 import { api } from "@/utils/api";
+import { useAuth } from "@/context/AuthProvider";
+
+import { notifications, notify } from "@/app/Zakah/common/notification";
 
 let cnt = 1;
 
@@ -28,6 +31,7 @@ const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
   { inputFields: IInputField[], totalAsset: number, setTotalAsset: (asset: number) => void }) => {
   const [fields, setFields] = useState(inputFields);
   const { value, error, hasError, handleChange, clearForm } = useForm(fields, { ...InitialState });
+  const { router } = useAuth();
 
   const addField = () => {
     setFields((prev) => {
@@ -56,12 +60,21 @@ const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
         total_amount: zakah,
         calculation_breakdown: value
       });
+      notify.success(
+        notifications.zakah_calculation.success.message,
+        notifications.zakah_calculation.success.id,
+      );
+      router.push("/");
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
       } else {
         console.error(error);
       }
+      notify.error(
+        notifications.zakah_calculation.failed.message,
+        notifications.zakah_calculation.failed.id
+      );
     }
   };
 

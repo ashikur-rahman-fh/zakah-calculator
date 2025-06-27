@@ -7,9 +7,10 @@ import { IInputField } from "../types";
 import { InputFields } from "./constants";
 import { useForm } from "@/hooks/InputHandler";
 import { api } from "@/utils/api";
-import { notify } from "../Zakah/common/Common";
 import { useAuth } from "@/context/AuthProvider";
 import { updateZakahYears } from "@/utils/zakahApis";
+
+import { notify, notifications } from "../Zakah/common/notification";
 
 const PayZakahForm = ({ inputFields, zakahToPay }:
   { inputFields: IInputField[], zakahToPay: { year: number, month: string } | null }) => {
@@ -28,7 +29,10 @@ const PayZakahForm = ({ inputFields, zakahToPay }:
           zakah_year: zakahToPay.year,
           zakah_month: zakahToPay.month
         })
-        notify.success("Transaction created successfully", "transaction-create-success");
+        notify.success(
+          notifications.transaction_create.success.message,
+          notifications.transaction_create.success.id,
+        );
         updateZakahYears(dispatch);
       } catch (error) {
         if (error instanceof Error) {
@@ -36,7 +40,10 @@ const PayZakahForm = ({ inputFields, zakahToPay }:
         } else {
           console.log(error)
         }
-        notify.error("Failed to create transaction", "transaction-create-fail");
+        notify.error(
+          notifications.transaction_create.failed.message,
+          notifications.transaction_create.failed.id,
+        );
       }
     })();
   };
