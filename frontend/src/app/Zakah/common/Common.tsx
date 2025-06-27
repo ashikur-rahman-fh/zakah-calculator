@@ -1,8 +1,6 @@
 import React, { forwardRef } from "react";
 import NavbarNoAuth from "../../NavbarNoAuth";
 
-import { toast, Zoom } from "react-toastify";
-
 export const Amount = ({ amount, fontColor }: { amount: number, fontColor: string }) => {
   return <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>{amount.toString().padStart(8, ' ')}$</span>;
 };
@@ -151,50 +149,4 @@ export const LoadingSkeleton = () => {
       </div>
     </ React.Fragment>
   );
-};
-
-
-export const notify = {
-  error: (message: string, id: string) => {
-    toast.error(message, {
-      toastId: id,
-      position: "bottom-left",
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    })
-  },
-  success: (message: string, id: string) => {
-    toast.success(message, {
-      toastId: id,
-      position: "bottom-left",
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    })
-  },
-  info: (message: string, id: string) => {
-    toast.info(message, {
-      toastId: id,
-      position: "bottom-left",
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    })
-  },
 };

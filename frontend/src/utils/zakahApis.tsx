@@ -1,17 +1,25 @@
 import { api } from "./api";
-import { notify } from "@/app/Zakah/common/Common";
 import { ITransaction, IZakahYear } from "@/app/types";
 import { IAction } from "@/context/StateProvider";
 import { Dispatch } from "react";
 
+import { notifications, notify } from "@/app/Zakah/common/notification";
+import { format } from "@/app/Zakah/common/helper";
+
 export const getZakahYears = async (): Promise<IZakahYear[]> => {
   try {
     const data = await api.get("/api/zakah-years");
-    notify.success("Zakah list has been updated", "zakah-year-success");
+    notify.success(
+      notifications.zakah_list_update.success.message,
+      notifications.zakah_list_update.success.id,
+    );
     return data as IZakahYear[];
   } catch (error) {
     if (error instanceof Error) {
-      notify.error("Failed to update zakah list", "zakah-year-fail");
+      notify.error(
+        notifications.zakah_list_update.failed.message,
+        notifications.zakah_list_update.failed.id,
+      );
     } else {
       console.error("Failed to update zakah list");
     }
@@ -27,13 +35,19 @@ export const updateZakahYears = async (dispatch: Dispatch<IAction>) => {
 export const getTransactions = async (year: number): Promise<ITransaction[]> => {
   try {
     const data = await api.get("/api/zakah-transactions", { year: year });
-    notify.success("Transaction list has been updated", `transaction-success-${year}`);
+    notify.success(
+      notifications.transaction_list_update.success.message,
+      format(notifications.transaction_list_update.success.id, year),
+    );
     return data as ITransaction[];
   } catch (error) {
     if (error instanceof Error) {
-      notify.error("Failed to update transaction list", `transaction-failed-${year}`);
+      notify.error(
+        notifications.transaction_list_update.failed.message,
+        format(notifications.transaction_list_update.failed.id, year),
+      );
     } else {
-      notify.error("Failed to update transaction list", `transaction-failed-${year}`);
+      console.log("Transaction list update failed due to ", error);
     }
   }
   return [];

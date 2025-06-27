@@ -3,9 +3,13 @@
 import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthProvider';
-import { Button, notify, StyledInput } from '../Zakah/common/Common';
+import { Button, StyledInput } from '../Zakah/common/Common';
 import { InputFields } from './constants';
 import { useForm } from '@/hooks/InputHandler';
+
+import { notify, notifications } from '../Zakah/common/notification';
+import { format } from '../Zakah/common/helper';
+
 
 const LoginForm = () => {
   const { value, hasError, handleChange } = useForm([...InputFields]);
@@ -15,9 +19,16 @@ const LoginForm = () => {
   const handleSubmit = async () => {
     try {
       await login(value["username"], value["password"]);
-      notify.success(`Welcome ${value["username"]}!`, "login-success");
+      notify.success(
+        format(notifications.login.success.message, value["username"]),
+        notifications.login.success.id
+      );
     } catch (error: unknown) {
-      notify.error("Login was unsuccessful!", "login-failed");
+      notify.error(
+        notifications.login.failed.message,
+        notifications.login.failed.id
+      );
+
       if (error instanceof Error) {
         setErrorMsg(error.message);
       } else {
