@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { Amount, GlassCard, GlassCardHeader } from "../Zakah/common/Common";
 import CalculateZakah from "./CalculateZakah";
 
+import { calculateZakah } from "@/utils/helper";
+
 const CalculateZakahComponent = () => {
   const [totalAsset, setTotalAsset] = useState<number>(0);
-  const zakah = Math.ceil(totalAsset * 2.5) / 100;
+  const zakah = calculateZakah(totalAsset);
 
   return (
     <div className="grid grid-col-1 md:grid-cols-12 gap-8">

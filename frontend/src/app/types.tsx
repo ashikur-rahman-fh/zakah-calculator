@@ -75,3 +75,8 @@ export interface IInputField {
   error: string;
   validator: (value: string) => boolean;
 };
+
+export interface IAsset {
+  name: string;
+  amount: number;
+};

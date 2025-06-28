@@ -11,6 +11,7 @@ import { api } from "@/utils/api";
 import { useAuth } from "@/context/AuthProvider";
 
 import { notifications, notify } from "@/app/Zakah/common/notification";
+import { calculateZakah } from "@/utils/helper";
 
 let cnt = 1;
 
@@ -52,7 +53,7 @@ const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
   }, [value, setTotalAsset]);
 
   const handleSubmit = async () => {
-    const zakah = Math.ceil(totalAsset * 2.5) / 100;
+    const zakah = calculateZakah(totalAsset);
     try {
       await api.post("/api/zakah-years/create/", {
         year: value["year"],

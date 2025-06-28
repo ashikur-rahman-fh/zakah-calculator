@@ -33,11 +33,20 @@ export default function HomePage() {
   return (
     <React.Fragment>
       <GlassCard twStyle="mb-2">
-        <Link
-          href="/calculate"
-        >
-          Click here to calculate your zakah
-        </Link>
+        <div className="bg-white/20 w-fit p-1 m-1 rounded uppercase text-xs">
+          <Link
+            href="/calculate"
+          >
+            Click here to calculate your zakah
+          </Link>
+        </div>
+        <div className="bg-white/20 w-fit p-1 m-1 rounded uppercase text-xs">
+          <Link
+            href="/assets"
+          >
+            Click here to check your assets
+          </Link>
+        </div>
       </GlassCard>
       <div className="grid grid-cols-1 md:grid-cols-9 gap-16">
         <GlassCard twStyle="col-span-1 md:col-start-1 md:col-end-4">
