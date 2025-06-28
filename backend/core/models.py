@@ -1,6 +1,7 @@
 import uuid
 from datetime import date
 from django.db import models
+from django.db.models.functions import Lower
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -124,5 +125,51 @@ class ZakahTransaction(models.Model):
             raise ValidationError("Payment date cannot be in the future.")
 
     def save(self, *args, **kwargs):
-        self.full_clean()  # Enforce all validations before saving
+        self.full_clean()
         super().save(*args, **kwargs)
+
+
+class Asset(models.Model):
+    """
+        Class representing the current asset. Later this could be converted to Zakah.
+    """
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        db_index=True,
+        help_text="Primary key for ZakahTransaction, generated as a UUID."
+    )
+
+    name = models.CharField(max_length=255, null=False, blank=False, unique=True)
+
+    amount = models.DecimalField(
+        null=False,
+        blank=False,
+        max_digits=12,
+        decimal_places=2,
+        validators=[MinValueValidator(0.01)],
+        help_text="The amount of money/asset in this particular field."
+    )
+
+    class Meta:
+        db_table = "asset"
+        verbose_name = "Asset"
+        verbose_name_plural = "Assets"
+        ordering = ["name"]
+        indexes = [
+            models.Index(fields=["name"]),
+        ]
+        constraints = [
+            models.UniqueConstraint(
+                Lower('name'), name='unique_lower_name'
+            ),
+        ]
+
+    def save(self, *args, **kwargs):
+        self.full_clean();
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.name} {self.amount}"

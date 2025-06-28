@@ -1,5 +1,4 @@
-from .models import ZakahCalculation, ZakahTransaction
-
+from .models import ZakahCalculation, ZakahTransaction, Asset
 
 
 class ZakahService:
@@ -13,3 +12,8 @@ class TransactionService:
     @staticmethod
     def get_transactions_by_year(year: int):
         return ZakahTransaction.objects.select_related('zakah').filter(zakah__year=year)
+
+class AssetService:
+    @staticmethod
+    def get_all_assets():
+        return Asset.objects.all()
