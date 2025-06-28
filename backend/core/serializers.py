@@ -1,6 +1,6 @@
 import calendar
 from rest_framework import serializers
-from .models import ZakahCalculation, ZakahTransaction
+from .models import ZakahCalculation, ZakahTransaction, Asset
 from django.db.models import Sum
 
 from .utils import index_to_month, month_to_index
@@ -100,3 +100,13 @@ class ZakahTransactionCreateSerializer(serializers.Serializer):
         transaction.full_clean()
         transaction.save()
         return transaction
+
+
+class AssetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asset
+        fields = ['id', 'name', 'amount']
+        extra_kwargs = {
+            'name': {'required': True},
+            'amount': {'required': True}
+        }
