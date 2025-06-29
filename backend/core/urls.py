@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import ZakahYearListAPIView, ZakahTransactionByYearAPIView, \
                 ZakahCalculationCreateAPIView, ZakahTransactionCreateAPIView, \
-                AssetCreateAPIView, AssetListAPIView
+                AssetDetailAPIView, AssetListAPIView
 
 urlpatterns = [
     path('api/zakah-years/', ZakahYearListAPIView.as_view(), name='zakah-year-list'),
@@ -11,5 +11,5 @@ urlpatterns = [
     path('api/zakah-transactions/create/', ZakahTransactionCreateAPIView.as_view(), name='zakah-transaction-create'),
 
     path('api/assets/', AssetListAPIView.as_view(), name='asset-list'),
-    path('api/assets/create/', AssetCreateAPIView.as_view(), name='asset-create'),
+    path('api/assets/<str:pk>/', AssetDetailAPIView.as_view(), name='asset-detail'),
 ]
