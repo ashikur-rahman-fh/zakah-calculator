@@ -1,3 +1,4 @@
+from django.http import Http404
 from .models import ZakahCalculation, ZakahTransaction, Asset
 
 
@@ -17,3 +18,10 @@ class AssetService:
     @staticmethod
     def get_all_assets():
         return Asset.objects.all()
+
+    @staticmethod
+    def get_asset_by_pk(pk):
+        try:
+            return Asset.objects.get(pk=pk)
+        except Asset.DoesNotExist:
+            raise Http404

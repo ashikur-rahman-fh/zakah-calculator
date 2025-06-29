@@ -153,11 +153,15 @@ class Asset(models.Model):
         help_text="The amount of money/asset in this particular field."
     )
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = "asset"
         verbose_name = "Asset"
         verbose_name_plural = "Assets"
-        ordering = ["name"]
+        ordering = ["created_at"]
         indexes = [
             models.Index(fields=["name"]),
         ]
