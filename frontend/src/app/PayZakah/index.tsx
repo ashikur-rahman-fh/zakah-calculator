@@ -3,7 +3,7 @@
 import React from "react";
 
 import { Button, GlassCardHeader, StyledInput } from "../Zakah/common/Common";
-import { useForm } from "@/hooks/useInputHandler";
+import { useForm } from "@/hooks/InputHandler";
 import { useAuth } from "@/context/AuthProvider";
 import { updateTransactions, updateZakahYears } from "@/utils/zakahApis";
 import { api } from "@/utils/api";
