@@ -3,14 +3,13 @@
 import React from "react";
 
 import { Button, GlassCardHeader, StyledInput } from "../Zakah/common/Common";
+import { useForm } from "@/hooks/useInputHandler";
+import { useAuth } from "@/context/AuthProvider";
+import { updateTransactions, updateZakahYears } from "@/utils/zakahApis";
+import { api } from "@/utils/api";
+import { notify, notifications } from "../Zakah/common/notification";
 import { IInputField } from "../types";
 import { InputFields } from "./constants";
-import { useForm } from "@/hooks/InputHandler";
-import { api } from "@/utils/api";
-import { useAuth } from "@/context/AuthProvider";
-import { updateZakahYears } from "@/utils/zakahApis";
-
-import { notify, notifications } from "../Zakah/common/notification";
 
 const PayZakahForm = ({ inputFields, zakahToPay }:
   { inputFields: IInputField[], zakahToPay: { year: number, month: string } | null }) => {
@@ -34,6 +33,7 @@ const PayZakahForm = ({ inputFields, zakahToPay }:
           notifications.transaction_create.success.id,
         );
         updateZakahYears(dispatch);
+        updateTransactions(zakahToPay.year, dispatch);
       } catch (error) {
         if (error instanceof Error) {
           console.error(error.message);
