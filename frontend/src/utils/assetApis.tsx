@@ -27,7 +27,7 @@ export const getAssets = async (): Promise<IAsset[]> => {
 
 export const createAsset = async (asset: IAsset): Promise<IAsset | null> => {
   try {
-    const data: IAsset = await api.post("/api/assets/create/", { ...asset });
+    const data: IAsset = await api.post("/api/assets/", { ...asset });
     notify.success(
       notifications.asset_create.success.message,
       notifications.asset_create.success.id,
