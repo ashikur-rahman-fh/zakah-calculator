@@ -19,6 +19,12 @@ const AssetClient = () => {
     })();
   }, []);
 
+  const deleteAsset = (id: string) => {
+    setAssets((prev) => {
+      return prev.filter((asset) => asset.id !== id);
+    });
+  };
+
   const totalAsset = useMemo(() => {
     return assets.reduce((acc: number, curr) => Number(acc.toString().trim()) + Number(curr.amount.toString().trim()), 0);
   }, [assets]);
@@ -27,7 +33,7 @@ const AssetClient = () => {
     <div className="grid gap-4 grid-cols-1 md:grid-cols-12 md:grid-rows-10">
       <GlassCard twStyle="col-span-1 md:col-start-1 md:col-end-9 md:row-start-1 md:row-end-11 md:min-h-[80vh]">
         <GlassCardHeader>Assets</GlassCardHeader>
-        <AssetList assets={assets} />
+        <AssetList assets={assets} deleteAsset={deleteAsset} />
       </GlassCard>
       <GlassCard twStyle="col-span-1 md:col-start-9 md:col-end-13 md:row-start-1 md:row-end-6">
         <GlassCardHeader>Add Asset</GlassCardHeader>

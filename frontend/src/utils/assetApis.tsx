@@ -32,10 +32,7 @@ export const createAsset = async (asset: IAsset): Promise<IAsset | null> => {
       notifications.asset_create.success.message,
       notifications.asset_create.success.id,
     );
-    return {
-      name: data['name'],
-      amount: data['amount']
-    } as IAsset;
+    return data;
   }
   catch (error) {
     if (error instanceof Error) {

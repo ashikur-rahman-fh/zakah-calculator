@@ -77,6 +77,7 @@ export interface IInputField {
 };
 
 export interface IAsset {
+  id?: string;
   name: string;
   amount: number;
 };
