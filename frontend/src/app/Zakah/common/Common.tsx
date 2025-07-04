@@ -2,7 +2,8 @@ import React, { forwardRef } from "react";
 import NavbarNoAuth from "../../NavbarNoAuth";
 
 export const Amount = ({ amount, fontColor }: { amount: number, fontColor: string }) => {
-  return <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>{amount.toString().padStart(8, ' ')}$</span>;
+  const sanitizedAmount = Math.ceil(amount * 100) / 100;
+  return <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>{sanitizedAmount.toString().padStart(8, ' ')}$</span>;
 };
 
 export const GlassCard = ({ twStyle, children }: { twStyle: string, children: React.ReactNode }) => {

@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 
 import { IAsset } from "../types";
-import { Amount } from "../Zakah/common/Common";
+import { Amount, StyledInput } from "../Zakah/common/Common";
 
 import { Edit, Delete } from "@/UICommon/Icons";
 import { ConfirmationModal } from "@/UICommon/Modal";
 import { api } from "@/utils/api";
 import { notifications, notify } from "../Zakah/common/notification";
+import { AssetInput } from "./constants";
+import { useForm } from "@/hooks/InputHandler";
 
 const ActionButton = (
   { children, onClick = () => { } }: { children: React.ReactNode, onClick?: React.MouseEventHandler<HTMLButtonElement> }
@@ -28,15 +30,47 @@ const DeleteModalBody = ({ asset }: { asset: IAsset }) => {
   );
 };
 
-const ActionButtons = ({ asset, deleteAsset }: { asset: IAsset, deleteAsset: (id: string) => void }) => {
+const ModifyModalBody = ({ asset, value, error, handleChange }:
+  {
+    asset: IAsset,
+    value: Record<string, string>,
+    error: Record<string, string>,
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  }) => {
+
+  return (
+    <div className="flex justify-center items-center flex-col">
+      <h1 className="mb-4">Proceed to modify {asset.name} </h1>
+      {
+        AssetInput.map((assetInput, index) => {
+          return (
+            <StyledInput
+              key={assetInput.id}
+              name={assetInput.name}
+              placeholder={assetInput.placeholder}
+              value={value[assetInput.name] || ""}
+              onChange={(e) => { handleChange(e, index) }}
+              error={error[assetInput.name]}
+            />
+          );
+        })}
+    </div>
+  );
+};
+
+const ActionButtons = ({ asset, deleteAsset, modifyAsset }:
+  { asset: IAsset, deleteAsset: (id: string) => void, modifyAsset: (id: string, asset: IAsset) => void }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [modifyModalOpen, setModifyModalOpen] = useState(false);
+  const { value, error, handleChange } = useForm(AssetInput, { name: asset.name, amount: asset.amount.toString() });
+
   const confirmDelete = async () => {
     try {
-      await api.delete(`/api/assets/${asset.id}/`);
       if (!asset.id) {
         console.error("Asset id not exists!");
         return;
       }
+      await api.delete(`/api/assets/${asset.id}/`);
       deleteAsset(asset.id);
       notify.success(
         notifications.asset_delete.success.message,
@@ -54,9 +88,37 @@ const ActionButtons = ({ asset, deleteAsset }: { asset: IAsset, deleteAsset: (id
     }
   };
 
+  const confirmModify = async () => {
+    try {
+      if (!asset.id) {
+        console.error("Asset id not exists!");
+        return;
+      }
+      const newAsset: IAsset = {
+        name: value.name || "",
+        amount: Number(value.amount) || 0,
+      };
+      const data = await api.put<IAsset>(`/api/assets/${asset.id}/`, { ...newAsset });
+      modifyAsset(asset.id, data as IAsset);
+
+      notify.success(
+        notifications.asset_modify.success.message,
+        notifications.asset_modify.success.id
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        notify.error(
+          notifications.asset_modify.failed.message,
+          notifications.asset_modify.failed.id
+        );
+      } else {
+        console.error("Failed to modify asset due to", error);
+      }
+    }
+  };
   return (
     <React.Fragment>
-      <ActionButton onClick={() => { console.log(`${asset.name} edit clicked!`); }}>
+      <ActionButton onClick={() => setModifyModalOpen(true)}>
         <Edit />
       </ActionButton>
       <ActionButton onClick={() => setDeleteModalOpen(true)}>
@@ -68,11 +130,25 @@ const ActionButtons = ({ asset, deleteAsset }: { asset: IAsset, deleteAsset: (id
         body={<DeleteModalBody asset={asset} />}
         onConfirm={confirmDelete}
       />
+      <ConfirmationModal
+        open={modifyModalOpen}
+        setOpen={setModifyModalOpen}
+        body={
+          <ModifyModalBody
+            asset={asset}
+            value={value}
+            error={error}
+            handleChange={handleChange}
+          />
+        }
+        onConfirm={confirmModify}
+      />
     </ React.Fragment>
   );
 };
 
-const Asset = ({ asset, deleteAsset }: { asset: IAsset, deleteAsset: (id: string) => void }) => {
+const Asset = ({ asset, deleteAsset, modifyAsset }:
+  { asset: IAsset, deleteAsset: (id: string) => void, modifyAsset: (id: string, asset: IAsset) => void }) => {
 
   return (
     <div
@@ -81,7 +157,7 @@ const Asset = ({ asset, deleteAsset }: { asset: IAsset, deleteAsset: (id: string
       <div className="col-span-9 font-semibold">
         <div className="flex">
           {asset.name}
-          <ActionButtons asset={asset} deleteAsset={deleteAsset} />
+          <ActionButtons asset={asset} deleteAsset={deleteAsset} modifyAsset={modifyAsset} />
         </div>
       </div>
       <div className="col-span-3">
@@ -95,8 +171,14 @@ const Asset = ({ asset, deleteAsset }: { asset: IAsset, deleteAsset: (id: string
   );
 };
 
-const AssetList = ({ assets, deleteAsset }: { assets: IAsset[], deleteAsset: (id: string) => void }) => {
+const AssetList = ({ assets, deleteAsset, modifyAsset }:
+  { assets: IAsset[], deleteAsset: (id: string) => void, modifyAsset: (id: string, asset: IAsset) => void }) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+  if (assets.length === 0) {
+    return <h1 className="text-center font-semibold">No assets to display!</h1>;
+  }
+
   return (
     <section className="mt-8">
       <div>
@@ -106,6 +188,7 @@ const AssetList = ({ assets, deleteAsset }: { assets: IAsset[], deleteAsset: (id
               key={asset.name}
               asset={asset}
               deleteAsset={deleteAsset}
+              modifyAsset={modifyAsset}
             />
           );
         })}

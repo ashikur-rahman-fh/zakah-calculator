@@ -91,6 +91,16 @@ export const notifications = {
       id: "asset_deletion_failure",
     } as INotification,
   } as IMessageType,
+  asset_modify: {
+    success: {
+      message: "Asset has been modified.",
+      id: "asset_modification_success",
+    } as INotification,
+    failed: {
+      message: "Failed to modify asset.",
+      id: "asset_modification_failure",
+    } as INotification,
+  } as IMessageType,
 };
 
 export const notify = {
