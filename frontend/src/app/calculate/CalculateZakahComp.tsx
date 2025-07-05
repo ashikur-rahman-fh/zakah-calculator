@@ -25,7 +25,8 @@ const CalculateZakahComponent = () => {
               <Amount amount={totalAsset} fontColor="text-green-600" />
             </p>
             <p>
-              Zakah: <Amount amount={zakah} fontColor="text-red-600" />
+              Zakah: {"      "}
+              <Amount amount={zakah} fontColor="text-red-600" />
             </p>
           </pre>
         </div>

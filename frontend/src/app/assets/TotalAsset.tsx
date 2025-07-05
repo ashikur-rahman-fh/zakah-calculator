@@ -75,7 +75,7 @@ const TotalAsset = ({ assets }: { assets: IAsset[] }) => {
       <div className="flex justify-center items-center flex-col">
         <pre>
           <p>
-            Total Assets:{" "}
+            Total Assets:{"    "}
             <Amount fontColor="text-green-600" amount={totalAsset} />
           </p>
           <p>
