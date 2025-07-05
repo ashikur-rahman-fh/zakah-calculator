@@ -6,8 +6,13 @@ import { Button, StyledInput } from "../Zakah/common/Common";
 import { createAsset } from "@/utils/assetApis";
 import { IAsset } from "../types";
 
-const AddAsset = ({ setAssets }: { setAssets: Dispatch<SetStateAction<IAsset[]>> }) => {
-  const { value, error, handleChange, hasError, clearForm } = useForm(AssetInput);
+const AddAsset = ({
+  setAssets,
+}: {
+  setAssets: Dispatch<SetStateAction<IAsset[]>>;
+}) => {
+  const { value, error, handleChange, hasError, clearForm } =
+    useForm(AssetInput);
 
   const handleCreate = async () => {
     const asset: IAsset = {
@@ -26,34 +31,26 @@ const AddAsset = ({ setAssets }: { setAssets: Dispatch<SetStateAction<IAsset[]>>
   return (
     <section>
       <div className="flex flex-col justify-center items-center">
-        {
-          AssetInput.map((assetInput, index) => {
-            return (
-              <StyledInput
-                key={assetInput.id}
-                name={assetInput.name}
-                placeholder={assetInput.placeholder}
-                value={value[assetInput.name] || ""}
-                onChange={(e) => { handleChange(e, index) }}
-                error={error[assetInput.name]}
-              />
-            );
-          })
-        }
+        {AssetInput.map((assetInput, index) => {
+          return (
+            <StyledInput
+              key={assetInput.id}
+              name={assetInput.name}
+              placeholder={assetInput.placeholder}
+              value={value[assetInput.name] || ""}
+              onChange={(e) => {
+                handleChange(e, index);
+              }}
+              error={error[assetInput.name]}
+            />
+          );
+        })}
       </div>
       <div className="flex justify-center items-center">
-        <Button
-          twStyle=""
-          disabled={hasError}
-          onClick={handleCreate}
-        >
+        <Button twStyle="" disabled={hasError} onClick={handleCreate}>
           Create
         </Button>
-        <Button
-          twStyle=""
-          disabled={false}
-          onClick={clearForm}
-        >
+        <Button twStyle="" disabled={false} onClick={clearForm}>
           Clear
         </Button>
       </div>

@@ -2,7 +2,6 @@ import { api } from "./api";
 import { notify, notifications } from "@/app/Zakah/common/notification";
 import { IAsset } from "@/app/types";
 
-
 export const getAssets = async (): Promise<IAsset[]> => {
   try {
     const data = await api.get("/api/assets/");
@@ -11,8 +10,7 @@ export const getAssets = async (): Promise<IAsset[]> => {
       notifications.asset_list_update.success.id,
     );
     return data as IAsset[];
-  }
-  catch (error) {
+  } catch (error) {
     if (error instanceof Error) {
       notify.error(
         notifications.asset_list_update.failed.message,
@@ -33,8 +31,7 @@ export const createAsset = async (asset: IAsset): Promise<IAsset | null> => {
       notifications.asset_create.success.id,
     );
     return data;
-  }
-  catch (error) {
+  } catch (error) {
     if (error instanceof Error) {
       notify.error(
         notifications.asset_create.failed.message,

@@ -25,13 +25,22 @@ const getNewField = (): IInputField => {
       const num = Number(value.trim());
       return !isNaN(num) && num >= 0;
     },
-  }
-}
+  };
+};
 
-const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
-  { inputFields: IInputField[], totalAsset: number, setTotalAsset: (asset: number) => void }) => {
+const CalculateZakahForm = ({
+  inputFields,
+  totalAsset,
+  setTotalAsset,
+}: {
+  inputFields: IInputField[];
+  totalAsset: number;
+  setTotalAsset: (asset: number) => void;
+}) => {
   const [fields, setFields] = useState(inputFields);
-  const { value, error, hasError, handleChange, clearForm } = useForm(fields, { ...InitialState });
+  const { value, error, hasError, handleChange, clearForm } = useForm(fields, {
+    ...InitialState,
+  });
   const { router } = useAuth();
 
   const addField = () => {
@@ -59,7 +68,7 @@ const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
         year: value["year"],
         month: value["month"],
         total_amount: zakah,
-        calculation_breakdown: value
+        calculation_breakdown: value,
       });
       notify.success(
         notifications.zakah_calculation.success.message,
@@ -74,7 +83,7 @@ const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
       }
       notify.error(
         notifications.zakah_calculation.failed.message,
-        notifications.zakah_calculation.failed.id
+        notifications.zakah_calculation.failed.id,
       );
     }
   };
@@ -88,7 +97,9 @@ const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
             name={inputField.name}
             placeholder={inputField.placeholder}
             value={value[inputField.name] || ""}
-            onChange={(e) => { handleChange(e, index) }}
+            onChange={(e) => {
+              handleChange(e, index);
+            }}
             error={error[inputField.name]}
           />
         );
@@ -110,20 +121,21 @@ const CalculateZakahForm = ({ inputFields, totalAsset, setTotalAsset }:
         >
           Submit
         </Button>
-        <Button
-          twStyle=""
-          disabled={false}
-          onClick={clearForm}
-        >
+        <Button twStyle="" disabled={false} onClick={clearForm}>
           Clear
         </Button>
       </div>
-    </ div>
+    </div>
   );
 };
 
-const CalculateZakah = ({ totalAsset, setTotalAsset }:
-  { totalAsset: number, setTotalAsset: (asset: number) => void }) => {
+const CalculateZakah = ({
+  totalAsset,
+  setTotalAsset,
+}: {
+  totalAsset: number;
+  setTotalAsset: (asset: number) => void;
+}) => {
   return (
     <section>
       <CalculateZakahForm

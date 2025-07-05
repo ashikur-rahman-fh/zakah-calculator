@@ -40,7 +40,7 @@ const TotalAsset = ({ assets }: { assets: IAsset[] }) => {
     return assets.reduce(
       (acc: number, curr) =>
         Number(acc.toString().trim()) + Number(curr.amount.toString().trim()),
-      0
+      0,
     );
   }, [assets]);
   const zakah = calculateZakah(totalAsset);
@@ -55,7 +55,7 @@ const TotalAsset = ({ assets }: { assets: IAsset[] }) => {
       });
       notify.success(
         notifications.convert_asset.success.message,
-        notifications.convert_asset.success.id
+        notifications.convert_asset.success.id,
       );
     } catch (error) {
       if (error instanceof Error) {
@@ -65,7 +65,7 @@ const TotalAsset = ({ assets }: { assets: IAsset[] }) => {
       }
       notify.error(
         notifications.convert_asset.failed.message,
-        notifications.convert_asset.failed.id
+        notifications.convert_asset.failed.id,
       );
     }
   };

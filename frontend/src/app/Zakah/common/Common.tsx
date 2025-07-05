@@ -98,7 +98,7 @@ export const StyledInput = forwardRef<HTMLInputElement, StyledInputProps>(
         </p>
       </React.Fragment>
     );
-  }
+  },
 );
 
 StyledInput.displayName = "StyledInput";

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export const useDataLoader = (
   getDataFn: () => Promise<unknown>,
-  defaultValue: unknown
+  defaultValue: unknown,
 ) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(defaultValue);
