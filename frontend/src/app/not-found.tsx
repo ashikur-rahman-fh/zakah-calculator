@@ -1,7 +1,7 @@
 import React from "react";
+import Link from "next/link";
 
 import { GlassCard, GlassCardHeader } from "./Zakah/common/Common";
-import Link from "next/link";
 
 const Message = () => {
   return (

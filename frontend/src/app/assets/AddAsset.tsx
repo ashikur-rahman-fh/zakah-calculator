@@ -1,10 +1,12 @@
 import React, { Dispatch, SetStateAction } from "react";
 
 import { useForm } from "@/hooks/InputHandler";
-import { AssetInput } from "./constants";
-import { Button, StyledInput } from "../Zakah/common/Common";
 import { createAsset } from "@/utils/assetApis";
+
+import { Button, StyledInput } from "../Zakah/common/Common";
 import { IAsset } from "../types";
+
+import { AssetInput } from "./constants";
 
 const AddAsset = ({
   setAssets,

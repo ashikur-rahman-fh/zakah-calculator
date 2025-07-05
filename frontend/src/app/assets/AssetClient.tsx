@@ -1,14 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import AssetList from "./AssetList";
-import TotalAsset from "./TotalAsset";
-import AddAsset from "./AddAsset";
+
+import { getAssets } from "@/utils/assetApis";
 
 import AuthGuard from "../Zakah/common/AuthGuard";
 import { GlassCard, GlassCardHeader } from "../Zakah/common/Common";
 import { IAsset } from "../types";
-import { getAssets } from "@/utils/assetApis";
+
+import AssetList from "./AssetList";
+import TotalAsset from "./TotalAsset";
+import AddAsset from "./AddAsset";
+
+
 
 const AssetClient = () => {
   const [assets, setAssets] = useState<IAsset[]>([]);

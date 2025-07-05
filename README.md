@@ -65,3 +65,9 @@ To access the container or debugging
 ```bash
 docker-compose exec -it <container_id> sh
 ```
+
+## Submission
+### Fix lint error
+```
+npm run lint -- --fix
+```

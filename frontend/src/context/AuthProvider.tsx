@@ -2,12 +2,13 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback, useReducer } from 'react';
 import { useRouter } from 'next/navigation';
+
 import { api } from '@/utils/api';
 import { LoadingSkeleton } from '@/app/Zakah/common/Common';
+import { notify } from '@/app/Zakah/common/notification';
 
 import { zakahReducer, initialState, IZakahState, IAction } from './StateProvider';
 
-import { notify } from '@/app/Zakah/common/notification';
 
 interface AuthContextProps {
   user: string | null;

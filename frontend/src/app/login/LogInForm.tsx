@@ -3,12 +3,13 @@
 import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthProvider';
-import { Button, StyledInput } from '../Zakah/common/Common';
-import { InputFields } from './constants';
 import { useForm } from '@/hooks/InputHandler';
 
+import { Button, StyledInput } from '../Zakah/common/Common';
 import { notify, notifications } from '../Zakah/common/notification';
 import { format } from '../Zakah/common/helper';
+
+import { InputFields } from './constants';
 
 
 const LoginForm = () => {

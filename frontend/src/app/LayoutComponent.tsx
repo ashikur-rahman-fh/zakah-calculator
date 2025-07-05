@@ -1,11 +1,11 @@
 "use client"
 import React from "react";
-
 import { ToastContainer, Zoom } from "react-toastify";
 import { usePathname } from 'next/navigation';
 
-import Navbar from "./Navbar";
 import { AuthProvider } from "@/context/AuthProvider";
+
+import Navbar from "./Navbar";
 
 const LayoutComponent = ({ children }:
   Readonly<{ children: React.ReactNode }>) => {

@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
 
+import { calculateZakah } from "@/utils/helper";
+
 import { Amount, GlassCard, GlassCardHeader } from "../Zakah/common/Common";
+
 import CalculateZakah from "./CalculateZakah";
 
-import { calculateZakah } from "@/utils/helper";
 
 const CalculateZakahComponent = () => {
   const [totalAsset, setTotalAsset] = useState<number>(0);

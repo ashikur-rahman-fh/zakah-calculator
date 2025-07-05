@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
+import { useAuth } from "@/context/AuthProvider";
+import { updateZakahYears } from "@/utils/zakahApis";
+
 import Transactions from "./Transactions";
 import ZakahYear from "./Zakah";
 import PayZakah from "./PayZakah";
-
 import { GlassCard } from "./Zakah/common/Common";
 
-import { useAuth } from "@/context/AuthProvider";
-import { updateZakahYears } from "@/utils/zakahApis";
 
 export default function HomePage() {
   const [openPaymentForm, setOpenPaymentForm] = useState<boolean>(false);
