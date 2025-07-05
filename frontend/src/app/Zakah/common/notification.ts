@@ -101,6 +101,16 @@ export const notifications = {
       id: "asset_modification_failure",
     } as INotification,
   } as IMessageType,
+  convert_asset: {
+    success: {
+      message: "Asset has been converted to zakah.",
+      id: "asset_convert_success",
+    } as INotification,
+    failed: {
+      message: "Failed to convert asset to zakah.",
+      id: "asset_convert_failure",
+    } as INotification,
+  } as IMessageType,
 };
 
 export const notify = {

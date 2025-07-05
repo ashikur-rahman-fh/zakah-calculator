@@ -11,12 +11,15 @@ export function format(template: string, ...args: unknown[]): string {
 
   if (args.length === 1 && isPlainObject(args[0])) {
     const map = args[0] as FormatMap;
-    return template.replace(/\{([a-zA-Z_$][\w$]*)\}/g, (_match, key: string) => {
-      if (key in map) {
-        return String(map[key]);
-      }
-      throw new Error(`Key '${key}' not provided to format()`);
-    });
+    return template.replace(
+      /\{([a-zA-Z_$][\w$]*)\}/g,
+      (_match, key: string) => {
+        if (key in map) {
+          return String(map[key]);
+        }
+        throw new Error(`Key '${key}' not provided to format()`);
+      },
+    );
   }
 
   let autoIndex = 0;
@@ -28,3 +31,11 @@ export function format(template: string, ...args: unknown[]): string {
     return String(args[index]);
   });
 }
+
+export const getCurrentYear = (): string => {
+  return new Date().getFullYear().toString();
+};
+
+export const getCurrentMonth = (): string => {
+  return new Date().toLocaleString("default", { month: "long" });
+};

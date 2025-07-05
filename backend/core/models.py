@@ -49,7 +49,7 @@ class ZakahCalculation(models.Model):
         verbose_name = "Zakah Calculation"
         verbose_name_plural = "Zakah Calculations"
         unique_together = ("year", "month")
-        ordering = ["-year", "-month"]
+        ordering = ["year", "month"]
         indexes = [
             models.Index(fields=["year", "month"]),
         ]
@@ -108,7 +108,7 @@ class ZakahTransaction(models.Model):
         db_table = "zakah_transaction"
         verbose_name = "Zakah Transaction"
         verbose_name_plural = "Zakah Transactions"
-        ordering = ["-payment_date"]
+        ordering = ["payment_date"]
         indexes = [
             models.Index(fields=["payment_date"]),
             models.Index(fields=["paid_to"]),

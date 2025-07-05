@@ -1,12 +1,28 @@
 import React, { forwardRef } from "react";
 import NavbarNoAuth from "../../NavbarNoAuth";
 
-export const Amount = ({ amount, fontColor }: { amount: number, fontColor: string }) => {
+export const Amount = ({
+  amount,
+  fontColor = "",
+}: {
+  amount: number;
+  fontColor?: string;
+}) => {
   const sanitizedAmount = Math.ceil(amount * 100) / 100;
-  return <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>{sanitizedAmount.toString().padStart(8, ' ')}$</span>;
+  return (
+    <span className={`bg-white/20 rounded-md px-2 ${fontColor}`}>
+      {sanitizedAmount.toString().padStart(12, " ")}$
+    </span>
+  );
 };
 
-export const GlassCard = ({ twStyle, children }: { twStyle: string, children: React.ReactNode }) => {
+export const GlassCard = ({
+  twStyle,
+  children,
+}: {
+  twStyle: string;
+  children: React.ReactNode;
+}) => {
   return (
     <div
       className={`${twStyle}
@@ -26,16 +42,22 @@ export const GlassCard = ({ twStyle, children }: { twStyle: string, children: Re
   );
 };
 
-export const GlassCardHeader = ({ children }: { children: React.ReactNode }) => {
+export const GlassCardHeader = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
-    <h1 className="text-xl text-center font-semibold mb-4 uppercase">{children}</h1>
+    <h1 className="text-xl text-center font-semibold mb-4 uppercase">
+      {children}
+    </h1>
   );
 };
 
 interface StyledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   twStyle?: string;
   error?: string | null | undefined;
-};
+}
 
 export const StyledInput = forwardRef<HTMLInputElement, StyledInputProps>(
   ({ twStyle = "", error = "", ...props }, ref) => {
@@ -68,7 +90,10 @@ export const StyledInput = forwardRef<HTMLInputElement, StyledInputProps>(
           aria-describedby={error ? `${props.id}-error` : undefined}
           {...props}
         />
-        <p id={`${props.id}-error`} className={`mt-1 text-sm text-red-700 ${errorVisibility}`}>
+        <p
+          id={`${props.id}-error`}
+          className={`mt-1 text-sm text-red-700 ${errorVisibility}`}
+        >
           {error ? error : "hidden-error"}
         </p>
       </React.Fragment>
@@ -78,16 +103,20 @@ export const StyledInput = forwardRef<HTMLInputElement, StyledInputProps>(
 
 StyledInput.displayName = "StyledInput";
 
-export const Button = ({ children, disabled, twStyle, onClick }:
-  { children: React.ReactNode, disabled: boolean, twStyle: string, onClick: () => void }) => {
+export const Button = ({
+  children,
+  disabled = false,
+  twStyle = "",
+  onClick,
+}: {
+  children: React.ReactNode;
+  disabled?: boolean;
+  twStyle?: string;
+  onClick: () => void;
+}) => {
+  const bgStyle = disabled ? "bg-gray-400 border-gray-600/30" : "bg-white/30";
 
-  const bgStyle = disabled
-    ? "bg-gray-400 border-gray-600/30"
-    : "bg-white/30";
-
-  const cursorStyle = disabled
-    ? "cursor-not-allowed"
-    : "cursor-pointer";
+  const cursorStyle = disabled ? "cursor-not-allowed" : "cursor-pointer";
   const hoverStyle = disabled
     ? ""
     : "hover:bg-blue-700/30 hover:border-blue-300";
@@ -148,6 +177,6 @@ export const LoadingSkeleton = () => {
           </div>
         </div>
       </div>
-    </ React.Fragment>
+    </React.Fragment>
   );
 };
