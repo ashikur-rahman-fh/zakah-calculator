@@ -61,6 +61,56 @@ export const notifications = {
       id: "transaction_list_update_failure_{}",
     } as INotification,
   } as IMessageType,
+  asset_list_update: {
+    success: {
+      message: "Asset list has been updated.",
+      id: "asset_list_update_success",
+    } as INotification,
+    failed: {
+      message: "Failed to update asset list.",
+      id: "asset_list_update_failure",
+    } as INotification,
+  } as IMessageType,
+  asset_create: {
+    success: {
+      message: "Asset has been created.",
+      id: "asset_creation_success",
+    } as INotification,
+    failed: {
+      message: "Failed to create asset.",
+      id: "asset_creation_failure",
+    } as INotification,
+  } as IMessageType,
+  asset_delete: {
+    success: {
+      message: "Asset has been deleted.",
+      id: "asset_deletion_success",
+    } as INotification,
+    failed: {
+      message: "Failed to delete asset.",
+      id: "asset_deletion_failure",
+    } as INotification,
+  } as IMessageType,
+  asset_modify: {
+    success: {
+      message: "Asset has been modified.",
+      id: "asset_modification_success",
+    } as INotification,
+    failed: {
+      message: "Failed to modify asset.",
+      id: "asset_modification_failure",
+    } as INotification,
+  } as IMessageType,
+  convert_asset: {
+    success: {
+      message: "Asset has been converted to zakah.",
+      id: "asset_convert_success",
+    } as INotification,
+    failed: {
+      message: "Failed to convert asset to zakah.",
+      id: "asset_convert_failure",
+    } as INotification,
+  } as IMessageType,
 };
 
 export const notify = {

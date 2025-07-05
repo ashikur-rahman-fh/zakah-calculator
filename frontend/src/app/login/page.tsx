@@ -1,7 +1,8 @@
 import React from "react";
 
-import LoginForm from "./LogInForm";
 import { GlassCard, GlassCardHeader } from "../Zakah/common/Common";
+
+import LoginForm from "./LogInForm";
 
 export const metadata = {
   title: 'Login - Zakah Calculator',
