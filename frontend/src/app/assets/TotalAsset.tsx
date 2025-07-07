@@ -3,9 +3,10 @@ import React, { useMemo, useState } from "react";
 import { calculateZakah } from "@/utils/helper";
 import { ConfirmationModal } from "@/UICommon/Modal";
 import { api } from "@/utils/api";
+import { useAssetData } from "@/context/DataProvider";
+import Spinner from "@/UICommon/Spinner";
 
 import { Amount, Button } from "../Zakah/common/Common";
-import { IAsset } from "../types";
 import { getCurrentMonth, getCurrentYear } from "../Zakah/common/helper";
 import { notifications, notify } from "../Zakah/common/notification";
 
@@ -35,8 +36,12 @@ const ModalBody = ({ amount, zakah }: { amount: number; zakah: number }) => {
   );
 };
 
-const TotalAsset = ({ assets }: { assets: IAsset[] }) => {
+const TotalAsset = () => {
   const [open, setOpen] = useState(false);
+  const { assetDataState } = useAssetData();
+
+  const assets = assetDataState.data;
+
   const totalAsset = useMemo(() => {
     return assets.reduce(
       (acc: number, curr) =>
@@ -44,6 +49,10 @@ const TotalAsset = ({ assets }: { assets: IAsset[] }) => {
       0,
     );
   }, [assets]);
+
+  if (assetDataState.status === "loading") {
+    return <Spinner size="w-16"/>
+  }
   const zakah = calculateZakah(totalAsset);
 
   const handleConvert = async () => {
@@ -84,7 +93,7 @@ const TotalAsset = ({ assets }: { assets: IAsset[] }) => {
             <Amount fontColor="text-amber-600" amount={zakah} />
           </p>
         </pre>
-        <Button twStyle="mt-4" onClick={() => setOpen(true)} disabled={false}>
+        <Button twStyle="mt-4" onClick={() => setOpen(true)} disabled={assetDataState.error !== null}>
           Convert
         </Button>
       </div>

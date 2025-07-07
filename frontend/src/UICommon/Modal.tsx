@@ -47,7 +47,7 @@ export const ConfirmationModal = ({
         }}
         className="relative p-4 w-full max-w-md max-h-full"
       >
-        <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+        <div className="relative rounded-lg shadow-sm bg-gray-700/80">
           <button
             onClick={handleClose}
             type="button"

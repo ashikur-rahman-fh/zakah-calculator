@@ -1,33 +1,25 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 
 import { useForm } from "@/hooks/InputHandler";
-import { createAsset } from "@/utils/assetApis";
+import { useAssetData } from "@/context/DataProvider";
 
 import { Button, StyledInput } from "../Zakah/common/Common";
 import { IAsset } from "../types";
 
 import { AssetInput } from "./constants";
 
-const AddAsset = ({
-  setAssets,
-}: {
-  setAssets: Dispatch<SetStateAction<IAsset[]>>;
-}) => {
+const AddAsset = () => {
   const { value, error, handleChange, hasError, clearForm } =
     useForm(AssetInput);
 
+  const { addAsset } = useAssetData();
+
   const handleCreate = async () => {
-    const asset: IAsset = {
+    const asset: Partial<IAsset> = {
       name: value.name || "",
       amount: Number(value.amount) || 0,
     };
-    const data: IAsset | null = await createAsset(asset);
-    if (data === null) {
-      return;
-    }
-    setAssets((prev: IAsset[]) => {
-      return [...prev, data as IAsset];
-    });
+    addAsset(asset);
   };
 
   return (

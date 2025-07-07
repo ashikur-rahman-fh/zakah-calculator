@@ -8,7 +8,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const bg_url = `bg-[url('/bg_5.jpg')]`;
+  const bg_url = `bg-[url('/bg_10.gif')]`;
 
   return (
     <html lang="en">
