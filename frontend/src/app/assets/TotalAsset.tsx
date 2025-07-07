@@ -5,6 +5,7 @@ import { ConfirmationModal } from "@/UICommon/Modal";
 import { api } from "@/utils/api";
 import { useAssetData } from "@/context/DataProvider";
 import Spinner from "@/UICommon/Spinner";
+import CustomBanner from "@/UICommon/CustomBanner";
 
 import { Amount, Button } from "../Zakah/common/Common";
 import { getCurrentMonth, getCurrentYear } from "../Zakah/common/helper";
@@ -38,7 +39,7 @@ const ModalBody = ({ amount, zakah }: { amount: number; zakah: number }) => {
 
 const TotalAsset = () => {
   const [open, setOpen] = useState(false);
-  const { assetDataState } = useAssetData();
+  const { assetDataState, fetchAssets } = useAssetData();
 
   const assets = assetDataState.data;
 
@@ -51,7 +52,7 @@ const TotalAsset = () => {
   }, [assets]);
 
   if (assetDataState.status === "loading") {
-    return <Spinner size="w-16"/>
+    return <Spinner size="w-16" />
   }
   const zakah = calculateZakah(totalAsset);
 
@@ -82,6 +83,11 @@ const TotalAsset = () => {
 
   return (
     <section>
+      <CustomBanner
+        header="Conversion failed. Please refresh the asset list."
+        show={assetDataState.error !== null}
+        action={fetchAssets}
+      />
       <div className="flex justify-center items-center flex-col">
         <pre>
           <p>

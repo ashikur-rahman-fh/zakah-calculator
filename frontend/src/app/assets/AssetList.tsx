@@ -6,6 +6,7 @@ import { ConfirmationModal } from "@/UICommon/Modal";
 import { useForm } from "@/hooks/InputHandler";
 import { useAssetData } from "@/context/DataProvider";
 import Spinner from "@/UICommon/Spinner";
+import CustomBanner from "@/UICommon/CustomBanner";
 
 import { IAsset } from "../types";
 import { Amount, StyledInput } from "../Zakah/common/Common";
@@ -56,7 +57,8 @@ const ModifyModalBody = ({
   return (
     <div className="flex justify-center items-center flex-col">
       <h1 className="mb-4">
-        Proceed to modify <span className="text-amber-300">{asset.name}</span>{"?"}
+        Proceed to modify <span className="text-amber-300">{asset.name}</span>
+        {"?"}
       </h1>
       {AssetInput.map((assetInput, index) => {
         return (
@@ -160,7 +162,7 @@ const Asset = ({ asset }: { asset: IAsset }) => {
 };
 
 const AssetList = () => {
-  const { assetDataState } = useAssetData();
+  const { assetDataState, fetchAssets } = useAssetData();
   const assets = assetDataState.data;
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -175,6 +177,11 @@ const AssetList = () => {
 
   return (
     <section className="mt-8">
+        <CustomBanner
+          header="This data might be stale. Please refresh to load the most recent information."
+          action={fetchAssets}
+          show={assetDataState.error !== null}
+        />
       <div>
         {assets.map((asset) => {
           return <Asset key={asset.id} asset={asset} />;
