@@ -4,8 +4,9 @@ import React from "react";
 
 import { useForm } from "@/hooks/InputHandler";
 import { useAuth } from "@/context/AuthProvider";
-import { updateTransactions, updateZakahYears } from "@/utils/zakahApis";
+import { updateTransactions } from "@/utils/zakahApis";
 import { api } from "@/utils/api";
+import { useZakahData } from "@/context/DataProvider";
 
 import { Button, GlassCardHeader, StyledInput } from "../Zakah/common/Common";
 import { notify, notifications } from "../Zakah/common/notification";
@@ -24,6 +25,7 @@ const PayZakahForm = ({
     useForm(inputFields);
 
   const { dispatch } = useAuth();
+  const { fetchZakahYears } = useZakahData();
 
   const handleSubmit = () => {
     if (zakahToPay === null) {
@@ -40,7 +42,7 @@ const PayZakahForm = ({
           notifications.transaction_create.success.message,
           notifications.transaction_create.success.id,
         );
-        updateZakahYears(dispatch);
+        fetchZakahYears();
         updateTransactions(zakahToPay.year, dispatch);
       } catch (error) {
         if (error instanceof Error) {

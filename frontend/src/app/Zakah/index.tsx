@@ -1,6 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useZakahData } from "@/context/DataProvider";
+import Spinner from "@/UICommon/Spinner";
 
 import { IZakahYear } from "../types";
 
@@ -79,18 +82,29 @@ const ZakahYearRenderer = ({ zakahYears, showPaymentForm, setZakahToPay }:
   );
 };
 
-const ZakahYear = ({ zakahYears, showPaymentForm, setZakahToPay }:
+const ZakahYear = ({ showPaymentForm, setZakahToPay }:
   {
-    zakahYears: IZakahYear[], showPaymentForm: () => void,
+    showPaymentForm: () => void,
     setZakahToPay: (value: { year: number, month: string }) => void
   }) => {
+
+  const { zakahDataState, fetchZakahYears } = useZakahData();
+  useEffect(() => {
+    fetchZakahYears();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (zakahDataState.status === "loading") {
+    return <Spinner size="w-20" />
+  }
 
   return (
     <React.Fragment>
       <section>
         <GlassCardHeader>History</GlassCardHeader>
         <ZakahYearRenderer
-          zakahYears={zakahYears.slice(-3)}
+          zakahYears={zakahDataState.data.slice(-3)}
           showPaymentForm={showPaymentForm}
           setZakahToPay={setZakahToPay}
         />

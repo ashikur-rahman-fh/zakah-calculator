@@ -2,14 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { updateTransactions } from "@/utils/zakahApis";
 import { useAuth } from "@/context/AuthProvider";
+import { useZakahData } from "@/context/DataProvider";
 
 import { ITransaction, IZakahYear } from "../types";
 import { Amount, GlassCardHeader } from "../Zakah/common/Common";
 
 const thisYear = new Date().getFullYear().toString();
 
-const SelectYear = ({ zakahYears }:
-  { zakahYears: IZakahYear[] }) => {
+const SelectYear = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
   const [year, setYear] = useState<string>(thisYear);
 
   const { dispatch } = useAuth();
@@ -18,14 +18,12 @@ const SelectYear = ({ zakahYears }:
     updateTransactions(Number(year.trim()), dispatch);
   }, [year, dispatch]);
 
-
   const optionWithCurrentYear = useMemo(() => {
     const years = zakahYears.map((zakah) => String(zakah.year).trim());
     const yearsWithCurrent = [...years, thisYear];
 
-    return [... new Set(yearsWithCurrent)];
+    return [...new Set(yearsWithCurrent)];
   }, [zakahYears]);
-
 
   return (
     <select
@@ -36,7 +34,9 @@ const SelectYear = ({ zakahYears }:
     >
       {optionWithCurrentYear.map((year: string) => {
         return (
-          <option key={year} value={year}>{year}</option>
+          <option key={year} value={year}>
+            {year}
+          </option>
         );
       })}
     </select>
@@ -47,7 +47,11 @@ const Transaction: React.FC<ITransaction> = ({ to, amount, date, method }) => {
   return (
     <li>
       <pre>
-        <p className="text-lg">{date} <Amount amount={amount} fontColor="text-white" />    sent to <span className="text-green-700">{to}</span> using <span className="text-blue-700">{method}</span></p>
+        <p className="text-lg">
+          {date} <Amount amount={amount} fontColor="text-white" /> sent to{" "}
+          <span className="text-green-700">{to}</span> using{" "}
+          <span className="text-blue-700">{method}</span>
+        </p>
       </pre>
     </li>
   );
@@ -57,19 +61,21 @@ const NoTransaction = () => {
   return <h1 className="text-center text-lg">No transactions available</h1>;
 };
 
-const TransactionsRenderer = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
+const TransactionsRenderer = () => {
   const { zakahState } = useAuth();
+  const { zakahDataState } = useZakahData();
   const transactions = zakahState.transactions;
 
   return (
     <div className="flex-row-reverse">
       <div className="flex justify-end">
-        <SelectYear zakahYears={zakahYears} />
+        <SelectYear zakahYears={zakahDataState.data} />
       </div>
       <div>
         <ul>
-          {transactions.length === 0 ? <NoTransaction /> :
-
+          {transactions.length === 0 ? (
+            <NoTransaction />
+          ) : (
             transactions.map((transaction: ITransaction, index: number) => {
               return (
                 <Transaction
@@ -80,22 +86,21 @@ const TransactionsRenderer = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
                   method={transaction.method}
                   description={transaction.description}
                 />
-              )
+              );
             })
-          }
+          )}
         </ul>
       </div>
-    </ div>
+    </div>
   );
 };
 
-
-const Transactions = ({ zakahYears }: { zakahYears: IZakahYear[] }) => {
+const Transactions = () => {
   return (
     <React.Fragment>
       <section>
         <GlassCardHeader>Transaction</GlassCardHeader>
-        <TransactionsRenderer zakahYears={zakahYears} />
+        <TransactionsRenderer />
       </section>
     </React.Fragment>
   );
